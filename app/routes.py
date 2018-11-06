@@ -29,25 +29,6 @@ def register():
 		return redirect(url_for('login'))												# För att samtidigt redirecta dig till login-sidan (url_for är en modul importerad från flask)
 	return render_template('register.html', title='Register', form=form) # Om ingen är inloggad så renderas register.html tillsammans med RegistrationForm som hanterar registreringstrafiken
 
-def send_register_email(user,first_password):
-	msg = Message('Ditt konto till Behovsanalys.se', # Mail-funktion från flask_mail
-		sender='noreply@ONONAB.com',
-		recipients=[user.email])			# Mottagaren av mailet ska vara den mail som är angiven och finns i databasen
-	# Nedanstående är själva mailet som mottagaren kommer att få från ONONABtest@gmail.com som det ser ut nu
-	msg.body = f'''Nedan är dina inloggningsdetaljer till Behovsanalys.se:
-	
-Emailadress: {user.email}
-Lösenord: {first_password}
-
-Klicka på länken nedan för att logga in och byta lösenord:
-{url_for('account', _external=True)}
-'''
-	mail.send(msg)	# Skickar meddelandet, se __init__.py för att förstå hur konfigurationerna för detta fungerar, och GOOGLA
-
-def randomString():
-	length = 6
-	letters = string.ascii_lowercase
-	return ''.join(random.choice(letters) for i in range(length))
 
 @app.route("/login", methods=['GET', 'POST']) # Kan hantera både GET och POST requests. POST requests sker när man skickar in inloggningsdetaljer
 def login():
