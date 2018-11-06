@@ -4,7 +4,6 @@ from app import app, bcrypt, db, mail
 from app.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
-import random, string
 
 
 @app.route("/")
