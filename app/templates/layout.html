@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-    
+
     <!-- I detta block kan du lägga in ytterlgare rader till <head> -->
     {% block head %}
-	{% endblock head%}	
+	{% endblock head%}
 
 	{% if title %}
 	<title>Racefox - {{ title }}</title>
@@ -25,7 +25,7 @@
 	<header class="site-header">
 	  <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
 	    <div class="container">
-	      <a class="navbar-brand mr-4" href="/">Racefox</a>
+	      <a class="navbar-brand mr-4" href="/"><img src="https://racefox.se/assets/racefox-logos/Racefox-White-Shaded-250.png" height = "45" class = "img-responsive" alt="Racefox"></img></a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="navbar-toggler-icon"></span>
 	      </button>
@@ -33,9 +33,9 @@
 	      <div class="collapse navbar-collapse" id="navbarToggle">
 	        <div class="navbar-nav mr-auto">
 				<!---Ändra länkningen till nya HTML-sidor --->
-	          <a class="nav-item nav-link" href="#">Aktivitet</a>
-	          <a class="nav-item nav-link" href="#">Sömn</a>
-	          <a class="nav-item nav-link" href="#">Mat</a>
+	          <a class="nav-item nav-link" href="/activity">Activity</a>
+	          <a class="nav-item nav-link" href="/sleep">Sleep</a>
+	          <a class="nav-item nav-link" href="/food">Food</a>
 	        </div>
 	        <!-- Navbar Right Side -->
 	        <div class="navbar-nav">
@@ -78,5 +78,3 @@
 	</main>
 </body>
 </html>
-
-

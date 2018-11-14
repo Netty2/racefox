@@ -11,6 +11,18 @@ from flask_mail import Message
 def home():
 	return render_template('home.html', title='Home')
 
+@app.route("/sleep")
+def load_sleep():
+	return render_template('home.html', title = 'Sleep')
+
+@app.route("/activity")
+def load_activity():
+	return render_template('home.html', title = 'Activity & Training')
+
+@app.route("/food")
+def load_food():
+	return render_template('home.html', title = 'Food & Nutrition')
+
 
 @app.route("/register", methods=['GET', 'POST']) # Kan hantera både GET och POST requests. POST requests sker när man skickar in inloggningsdetaljer
 def register():
@@ -24,7 +36,7 @@ def register():
 		db.session.add(user)	# SQLAlchemy kommando för att adda objektet
 		db.session.commit() 	# commitar till databasen
 
-		flash(f'Konto skapat för {form.email.data}! Du kan nu logga in', 'success')		# Givet att allt ovan fungerar så kommer en grön ('success') banner upp i toppen av sidan och konfirmerar att det gick
+		flash('Account created for {form.email.data} You can now login!', 'success')		# Givet att allt ovan fungerar så kommer en grön ('success') banner upp i toppen av sidan och konfirmerar att det gick
 		return redirect(url_for('login'))												# För att samtidigt redirecta dig till login-sidan (url_for är en modul importerad från flask)
 	return render_template('register.html', title='Register', form=form) # Om ingen är inloggad så renderas register.html tillsammans med RegistrationForm som hanterar registreringstrafiken
 
@@ -40,10 +52,10 @@ def login():
 		if user and bcrypt.check_password_hash(user.password, form.password.data):  # Om användarnamnet stämmer samt om lösenordet som användaren skrivit in i formen stämmer med det hashade lösenordet i databasen, kör nedan
 			login_user(user, remember=form.remember.data)							# login_user är en importerad modul från flask. remember är en form som finns i Forms.py. En check-box "remember me"
 			next_page = request.args.get('next')									# Funktion som tar dig till den sidan du va på innan, om du försökt klicka på kundsida men inte kommit åt den pga att du inte var inloggad, så ska du redirectas till den och inte första-sidan när du lyckats logga in
-			flash('Välkommen, du är nu inloggad som ' + user.email, 'success')		# Grön banner som säger att det gick bra
+			flash('Welcome, you are logged in as ' + user.email, 'success')		# Grön banner som säger att det gick bra
 			return redirect(next_page) if next_page else redirect(url_for('home'))	# Redirect till första-sidan om du inte försökt komma in på någonting annat innan
 		else:
-			flash('Email eller lösenord är felaktigt, försök igen', 'danger')		# Fungerar det inte, så kommer det istället upp en röd ('danger') banner med text 
+			flash('Email eller lösenord är felaktigt, försök igen', 'danger')		# Fungerar det inte, så kommer det istället upp en röd ('danger') banner med text
 	return render_template('login.html', title='Login', form=form)					# Renderar login.html och skickar in formen
 
 
@@ -55,7 +67,7 @@ def logout():
 
 # Sida för att kunna ändra dina inloggningsuppgifter
 @app.route("/account", methods=['GET', 'POST'])
-@login_required		# Går bara att accessa om du är inloggad 
+@login_required		# Går bara att accessa om du är inloggad
 def account():
 	form = UpdateAccountForm()
 	if form.validate_on_submit():
@@ -64,12 +76,11 @@ def account():
 			new_hashed_password = bcrypt.generate_password_hash(form.new_password.data).decode('utf-8')
 			current_user.password = new_hashed_password
 			db.session.commit()
-			flash('Ditt lösenord har uppdaterats', 'success')
+			flash('Your password has succecfully been updated', 'success')
 			return redirect(url_for('home'))
 		else:
-			flash('Fel lösenord angivet, försök igen', 'danger')
+			flash('Wrong password, try again', 'danger')
 	return render_template('account.html', title='Account', form=form)
-
 
 # Sida du kommer till när du klickat på "Glömt lösenord?"
 @app.route("/reset_password", methods=['GET', 'POST'])
@@ -80,7 +91,7 @@ def reset_request():
 	if form.validate_on_submit():	# OM SubmitField klickas, kör nedan
 		user = User.query.filter_by(email=form.email.data).first() # Kollar i databasen om det finns en användare med angiven email, if so, hämta objektet
 		send_reset_email(user)		# Anropa funktionen send_reset_email() (se nedan), och skicka med user-objektet
-		flash('Ett mail har skickats med instruktioner för att återställa lösenordet', 'info')	# Gul banner ('info') som säger att att återställningsmail har skickats till angiven email
+		flash('An email has beeen sent to restore the password.', 'info')	# Gul banner ('info') som säger att att återställningsmail har skickats till angiven email
 		return redirect(url_for('login'))
 	return render_template('reset_request.html', title='Reset Password', form=form)
 
@@ -89,10 +100,10 @@ def reset_request():
 def send_reset_email(user):
 	token = user.get_reset_token() # Skapar en unik "token" mha av User-objektet, googla detta för att få klarthet. Utan parameter så blir default livslängd 30min
 	msg = Message('Password Reset Request', # Mail-funktion från flask_mail
-		sender='noreply@ONONAB.com', 
+		sender='noreply@ONONAB.com',
 		recipients=[user.email])			# Mottagaren av mailet ska vara den mail som är angiven och finns i databasen
 	# Nedanstående är själva mailet som mottagaren kommer att få från ONONABtest@gmail.com som det ser ut nu
-	msg.body = f'''Klicka på följande länk för att återställa ditt lösenord:
+	msg.body = f'''Press the link to restore your password:
 {url_for('reset_token', token=token, _external=True)}
 '''
 
@@ -106,13 +117,13 @@ def reset_token(token):
 		return redirect(url_for('home'))
 	user = User.verify_reset_token(token)	# Metod som verifierar att det är rätt token samt plockar fram rätt objekt
 	if user is None:						# Om det inte finns någon user eller om ditt token har "dött" (tar 30min), kör nedan
-		flash('Felaktigt eller utgånget token', 'warning')	# Röd banner ('warning') med text om att det inte fungerar
+		flash('Bad or expired token', 'warning')	# Röd banner ('warning') med text om att det inte fungerar
 		return redirect(url_for('reset_request'))	# Skickar tillbaks en till sidan för att skapa ett nytt token och få ett nytt mail
 	form = ResetPasswordForm()						# Form från forms.py
 	if form.validate_on_submit():					# OM SubmitField klickas, kör nedan
 		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8') # Hashar det nya lösenordet som anges i PasswordField
 		user.password = hashed_password		# Updaterar det aktuella user-objektet
 		db.session.commit()					# commitar till databasen (viola det är nu ändrat)
-		flash('Lösenordet är nu återstält! Du kan nu logga in igen', 'success')
+		flash('Your password has been reset! You can now login', 'success')
 		return redirect(url_for('login'))	# Redirectar dig till login så att du kan logga in med det nya lösenordet
-	return render_template('reset_token.html', title='Reset Password', form=form)	# Renderar reset_token.html 
+	return render_template('reset_token.html', title='Reset Password', form=form)	# Renderar reset_token.html
