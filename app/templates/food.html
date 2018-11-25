@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+{% if current_user.is_authenticated == false %}
+	<div class="transbox"><center><h1 style="margin-top: 330px"><a href="{{ url_for('login') }}">Logga in</a> för att kunna använda tjänsten</h1></center></div>
+{% endif %}
+
+<div class="container">
+		<div class="row">
+			<div class="col-lg-3"></div>
+			<div class="col-lg-6">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Food & Nutrition</h5>
+						<h6 class="card-subtitle mb-4 text-muted">Your fooodddzz.</h6>
+						<div class="days">
+
+							<div class="single_day">
+								<div class="day_name"><p>Today</p></div>
+								<div class="container">
+									<div class="row">
+										<div class="chart-wrapper col">
+											<div id="activity_chart_day_1_1" class="chart_progress"></div>
+											<h2 class="chart_title">Weight</h2>
+										</div>
+										<div class="chart-wrapper col">
+											<div id="activity_chart_day_1_2" class="chart_progress"></div>
+											<h2 class="chart_title">Height</h2>
+										</div>
+										<div class="chart-wrapper col">
+											<div id="activity_chart_day_1_3" class="chart_progress"></div>
+											<h2 class="chart_title">Mass</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="single_day">
+								<div class="day_name"><p>Yesterday</p></div>
+								<div class="container">
+									<div class="row">
+										<div class="chart-wrapper col">
+											<div id="activity_chart_day_2_1" class="chart_progress"></div>
+											<h2 class="chart_title">Weight</h2>
+										</div>
+										<div class="chart-wrapper col">
+											<div id="activity_chart_day_2_2" class="chart_progress"></div>
+											<h2 class="chart_title">Height</h2>
+										</div>
+										<div class="chart-wrapper col">
+											<div id="activity_chart_day_2_3" class="chart_progress"></div>
+											<h2 class="chart_title">Mass</h2>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3"></div>
+		</div>
+</div>
+
+{% endblock content%}

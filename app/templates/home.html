@@ -21,8 +21,33 @@ div.transbox {
 </style>
 
 {% if current_user.is_authenticated == false %}
-	<div class="transbox"><center><h1 style="margin-top: 330px"><a href="{{ url_for('login') }}">Log in</a> to use the service</h1></center></div>
+	<div class="transbox"><center><h1 style="margin-top: 330px"><a href="{{ url_for('login') }}">Logga in</a> för att kunna använda tjänsten</h1></center></div>
 {% endif %}
+
+<div class="container">
+		<div class="row">
+			<div class="col-lg-3"></div>
+			<div class="col-lg-6">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Today's Goal</h5>
+						<h6 class="card-subtitle mb-4 text-muted">Processes without effective niche markets.</h6>
+						<div id="today_chart" class="chart_progress"></div>
+						<div class="coach">
+							<div class="coach_img"><img src="{{ url_for('static', filename='coach-icon.svg') }}" alt=""></div>
+							<h4 class="coach-title">Coach</h4>
+							<ul>
+								<li>Eat a snack.</li>
+								<li>Do yoga.</li>
+								<li>Take a 10mile walk.</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3"></div>
+		</div>
+</div>
 
 
 {% endblock content%}

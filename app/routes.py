@@ -13,15 +13,15 @@ def home():
 
 @app.route("/sleep")
 def load_sleep():
-	return render_template('home.html', title = 'Sleep')
+	return render_template('sleep.html', title = 'Sleep')
 
 @app.route("/activity")
 def load_activity():
-	return render_template('home.html', title = 'Activity & Training')
+	return render_template('activity.html', title = 'Activity & Training')
 
 @app.route("/food")
 def load_food():
-	return render_template('home.html', title = 'Food & Nutrition')
+	return render_template('food.html', title = 'Food & Nutrition')
 
 
 @app.route("/register", methods=['GET', 'POST']) # Kan hantera både GET och POST requests. POST requests sker när man skickar in inloggningsdetaljer
@@ -36,7 +36,7 @@ def register():
 		db.session.add(user)	# SQLAlchemy kommando för att adda objektet
 		db.session.commit() 	# commitar till databasen
 
-		flash('Account created for ' + form.email.data +'. You can now login!', 'success')		# Givet att allt ovan fungerar så kommer en grön ('success') banner upp i toppen av sidan och konfirmerar att det gick
+		flash('Account created for {form.email.data} You can now login!', 'success')		# Givet att allt ovan fungerar så kommer en grön ('success') banner upp i toppen av sidan och konfirmerar att det gick
 		return redirect(url_for('login'))												# För att samtidigt redirecta dig till login-sidan (url_for är en modul importerad från flask)
 	return render_template('register.html', title='Register', form=form) # Om ingen är inloggad så renderas register.html tillsammans med RegistrationForm som hanterar registreringstrafiken
 
@@ -55,7 +55,7 @@ def login():
 			flash('Welcome, you are logged in as ' + user.email, 'success')		# Grön banner som säger att det gick bra
 			return redirect(next_page) if next_page else redirect(url_for('home'))	# Redirect till första-sidan om du inte försökt komma in på någonting annat innan
 		else:
-			flash('Invalid email or password, please try again.', 'danger')		# Fungerar det inte, så kommer det istället upp en röd ('danger') banner med text
+			flash('Email eller lösenord är felaktigt, försök igen', 'danger')		# Fungerar det inte, så kommer det istället upp en röd ('danger') banner med text
 	return render_template('login.html', title='Login', form=form)					# Renderar login.html och skickar in formen
 
 
@@ -100,14 +100,12 @@ def reset_request():
 def send_reset_email(user):
 	token = user.get_reset_token() # Skapar en unik "token" mha av User-objektet, googla detta för att få klarthet. Utan parameter så blir default livslängd 30min
 	msg = Message('Password Reset Request', # Mail-funktion från flask_mail
-		sender='racefoxtest@gmail.com',
+		sender='noreply@ONONAB.com',
 		recipients=[user.email])			# Mottagaren av mailet ska vara den mail som är angiven och finns i databasen
 	# Nedanstående är själva mailet som mottagaren kommer att få från ONONABtest@gmail.com som det ser ut nu
-
-	# msg.body = '''Press the link to restore your password:
-	# {url_for('reset_token', token=token, _external=True)}
-	# '''
-	msg.html = render_template('password_reset_email.html', reset_url = url_for('reset_token', token=token, _external=True))
+	msg.body = f'''Press the link to restore your password:
+{url_for('reset_token', token=token, _external=True)}
+'''
 
 	mail.send(msg)	# Skickar meddelandet, se __init__.py för att förstå hur konfigurationerna för detta fungerar, och GOOGLA
 

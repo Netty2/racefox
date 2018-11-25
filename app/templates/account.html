@@ -3,13 +3,13 @@
 	<div class="content-section">
 	  <div class="media">
 	    <div class="media-body">
-	      <p class="text-secondary">Logged in as {{ current_user.email }}</p>
+	      <p class="text-secondary">Inloggad som {{ current_user.email }}</p>
 	    </div>
 	  </div>
 		<form method="POST" action="">
 			{{ form.hidden_tag() }}
 			<fieldset class="form-group">
-				<legend class="border-bottom mb-4">Update password</legend>
+				<legend class="border-bottom mb-4">Uppdatera lösenord</legend>
 				<div class="form-group">
 					{{ form.old_password.label(class="form-control-label") }}
 					{% if form.old_password.errors %}
