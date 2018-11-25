@@ -14,7 +14,7 @@ class RegistrationForm(FlaskForm):
 	def validate_email(self, email):
 		email = User.query.filter_by(email=email.data).first()
 		if email:
-			raise ValidationError('The email already exists. Choose another one.')
+			raise ValidationError('This email is already registered.')
 
 # Form som används för att ta emot input när en användare loggar in
 class LoginForm(FlaskForm):
