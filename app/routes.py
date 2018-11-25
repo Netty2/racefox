@@ -103,9 +103,11 @@ def send_reset_email(user):
 		sender='racefoxtest@gmail.com',
 		recipients=[user.email])			# Mottagaren av mailet ska vara den mail som är angiven och finns i databasen
 	# Nedanstående är själva mailet som mottagaren kommer att få från ONONABtest@gmail.com som det ser ut nu
-	msg.body = f'''Press the link to restore your password:
-{url_for('reset_token', token=token, _external=True)}
-'''
+
+	# msg.body = '''Press the link to restore your password:
+	# {url_for('reset_token', token=token, _external=True)}
+	# '''
+	msg.html = render_template('password_reset_email.html', reset_url = url_for('reset_token', token=token, _external=True))
 
 	mail.send(msg)	# Skickar meddelandet, se __init__.py för att förstå hur konfigurationerna för detta fungerar, och GOOGLA
 
