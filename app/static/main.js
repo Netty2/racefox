@@ -652,18 +652,6 @@ window.onload = function() {
 		activity_chart_day_2_3.text.style.color =  window.chartColors.grey;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
 	if($('#sleep_chart_day_1_1').length != 0){
 		sleep_chart_day_1_1.animate(0.73);
 		sleep_chart_day_1_1.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
@@ -707,20 +695,6 @@ window.onload = function() {
 		sleep_chart_day_2_3.text.style.color =  window.chartColors.grey;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	if($('#nutrition_chart_day_1_1').length != 0){
 		nutrition_chart_day_1_1.animate(0.77);
 		nutrition_chart_day_1_1.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
@@ -763,8 +737,5 @@ window.onload = function() {
 		nutrition_chart_day_2_3.text.style.fontSize = '1.6rem';
 		nutrition_chart_day_2_3.text.style.color =  window.chartColors.grey;
 	}
-
-
-
 
 };

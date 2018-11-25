@@ -17,11 +17,17 @@ def load_sleep():
 
 @app.route("/activity")
 def load_activity():
-	return render_template('activity.html', title = 'Activity & Training')
+	if current_user.is_authenticated:
+		return render_template('activity.html', title = 'Activity & Training')
+	else:
+		return redirect(url_for('home'))
 
 @app.route("/food")
 def load_food():
-	return render_template('food.html', title = 'Food & Nutrition')
+	if current_user.is_authenticated:
+		return render_template('food.html', title = 'Food & Nutrition')
+	else:
+		return redirect(url_for('home'))
 
 
 @app.route("/register", methods=['GET', 'POST']) # Kan hantera både GET och POST requests. POST requests sker när man skickar in inloggningsdetaljer

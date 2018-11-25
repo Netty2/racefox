@@ -4,26 +4,12 @@
 <style type="text/css">
 body {
 	background: url(https://cms.racefox.se//storage/uploads/2018/03/28/5abb70adb63bdnew-header-comp-01.jpg);
-	background-size: 100% auto;
-}
-
-a {
-		color: orange;
-}
-
-div.transbox {
-  margin: 20px;
-  background-color: #ffffff;
-  opacity: 0.8;
-  border-radius: 12px;
+	background-size: auto 100%;
 }
 
 </style>
 
-{% if current_user.is_authenticated == false %}
-	<div class="transbox"><center><h1 style="margin-top: 330px"><a href="{{ url_for('login') }}">Log in</a> to use Racefox</h1></center></div>
-{% endif %}
-
+{% if current_user.is_authenticated %}
 <div class="container">
 		<div class="row">
 			<div class="col-lg-3"></div>
@@ -31,7 +17,7 @@ div.transbox {
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Today's Goal</h5>
-						<h6 class="card-subtitle mb-4 text-muted">Processes without effective niche markets.</h6>
+						<h6 class="card-subtitle mb-4 text-muted">View today's progress. Follow the tips to reach your maximum potential.</h6>
 						<div id="today_chart" class="chart_progress"></div>
 						<div class="coach">
 							<div class="coach_img"><img src="{{ url_for('static', filename='coach-icon.svg') }}" alt=""></div>
@@ -48,6 +34,13 @@ div.transbox {
 			<div class="col-lg-3"></div>
 		</div>
 </div>
-
+<script src="{{ url_for('static', filename='progressbar.min.js') }}"></script>
+<script src="{{ url_for('static', filename='utils.js') }}"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+{% else %}
+<div id="login-button" class="col-md-4 text-center">
+  <a href="{{ url_for('login') }}"><button type="button" class="btn btn-primary btn-lg"><span>Log in</span></button></a>
+</div>
+{% endif %}
 
 {% endblock content%}
