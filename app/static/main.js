@@ -164,27 +164,6 @@ window.onload = function() {
 		});
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	if($('#sleep_chart_day_1_1').length != 0){
 		var sleep_chart_day_1_1 = new ProgressBar.Circle('#sleep_chart_day_1_1', {
 			color: '#aaa',
@@ -346,36 +325,6 @@ window.onload = function() {
 			}
 		});
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	if($('#nutrition_chart_day_1_1').length != 0){
 		var nutrition_chart_day_1_1 = new ProgressBar.Circle('#nutrition_chart_day_1_1', {
@@ -576,38 +525,12 @@ window.onload = function() {
 		});
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	if($('#today_chart').length != 0){
 		today_chart.animate(0.85);
 		today_chart.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
 		today_chart.text.style.fontSize = '1.6rem';
 		today_chart.text.style.color =  window.chartColors.blue;
 	}
-
-
-
-
-
-
-
-
 
 	if($('#activity_chart_day_1_1').length != 0){
 		activity_chart_day_1_1.animate(0.73);

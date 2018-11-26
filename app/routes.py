@@ -13,7 +13,37 @@ def home():
 
 @app.route("/sleep")
 def load_sleep():
-	return render_template('sleep.html', title = 'Sleep')
+	# TODO: Get the user id and fetch the specific historic data for that user
+	mock_sleep_data = [
+		{
+		"date": "2018-11-25",
+		"day_display_name": "Today",
+		"hours_slept": 0.6,
+		"sleep_quality": 0.7
+		},
+		{
+		"date": "2018-11-24",
+		"day_display_name": "Yesterday",
+		"hours_slept": 0.2,
+		"sleep_quality": 0.3
+		},
+		{
+		"date": "2018-11-23",
+		"day_display_name": "Friday",
+		"hours_slept": 0.3,
+		"sleep_quality": 0.8
+		},
+		{
+		"date": "2018-11-24",
+		"day_display_name": "Thursday",
+		"hours_slept": 0.55,
+		"sleep_quality": 0.68
+		}
+	]
+	if current_user.is_authenticated:
+		return render_template('sleep.html', title = 'Sleep', user_data = mock_sleep_data)
+	else:
+		return redirect(url_for('home'))
 
 @app.route("/activity")
 def load_activity():
@@ -24,8 +54,39 @@ def load_activity():
 
 @app.route("/food")
 def load_food():
+	# TODO: Get the user id and fetch the specific historic data for that user
+	mock_food_data = [
+		{
+		"date": "2018-11-25",
+		"day_display_name": "Today",
+		"carbohydrates": 0.5,
+		"fat": 0.3,
+		"protein": 0.7
+		},
+		{
+		"date": "2018-11-24",
+		"day_display_name": "Yesterday",
+		"carbohydrates": 0.5,
+		"fat": 0.6,
+		"protein": 0.7
+		},
+		{
+		"date": "2018-11-23",
+		"day_display_name": "Friday",
+		"carbohydrates": 0.5,
+		"fat": 0.6,
+		"protein": 0.7
+		},
+		{
+		"date": "2018-11-24",
+		"day_display_name": "Thursday",
+		"carbohydrates": 0.5,
+		"fat": 0.6,
+		"protein": 0.7
+		}
+	]
 	if current_user.is_authenticated:
-		return render_template('food.html', title = 'Food & Nutrition')
+		return render_template('food.html', title = 'Food & Nutrition', user_data = mock_food_data)
 	else:
 		return redirect(url_for('home'))
 

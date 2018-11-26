@@ -1,68 +1,41 @@
 {% extends "layout.html" %}
 {% block content %}
 
-
-{% if current_user.is_authenticated == false %}
-	<div class="transbox"><center><h1 style="margin-top: 330px"><a href="{{ url_for('login') }}">Logga in</a> för att kunna använda tjänsten</h1></center></div>
-{% endif %}
-
 <div class="container">
-	<div class="row">
+		<div class="row">
 			<div class="col-lg-3"></div>
 			<div class="col-lg-6">
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Sleep</h5>
-						<h6 class="card-subtitle mb-4 text-muted">Browse your sleep data</h6>
+						{% if user_data %}
+						<h6 class="card-subtitle mb-4 text-muted">Browse your sleep history.</h6>
 						<div class="days">
-
+							{% for day in user_data %}
 							<div class="single_day">
-								<div class="day_name"><p>Today</p></div>
+								<div class="day_name"><p>{{day.day_display_name}}</p></div>
 								<div class="container">
 									<div class="row">
 										<div class="chart-wrapper col">
-											<div id="sleep_chart_day_1_1" class="chart_progress"></div>
-											<h2 class="chart_title">Hours Slept</h2>
+											<div class="hours_slept_chart chart_progress", data={{day.hours_slept}}></div>
+											<h2 class="chart_title">Hours</h2>
 										</div>
 										<div class="chart-wrapper col">
-											<div id="sleep_chart_day_1_2" class="chart_progress"></div>
-											<h2 class="chart_title">Full REM</h2>
-										</div>
-										<div class="chart-wrapper col">
-											<div id="sleep_chart_day_1_3" class="chart_progress"></div>
-											<h2 class="chart_title">Start/End of Sleep</h2>
+											<div class="sleep_quality_chart chart_progress", data={{day.sleep_quality}}></div>
+											<h2 class="chart_title">Quality</h2>
 										</div>
 									</div>
 								</div>
 							</div>
-
-							<div class="single_day">
-								<div class="day_name"><p>Yesterday</p></div>
-								<div class="container">
-									<div class="row">
-										<div class="chart-wrapper col">
-											<div id="sleep_chart_day_2_1" class="chart_progress"></div>
-											<h2 class="chart_title">Hours Slept</h2>
-										</div>
-										<div class="chart-wrapper col">
-											<div id="sleep_chart_day_2_2" class="chart_progress"></div>
-											<h2 class="chart_title">Full REM</h2>
-										</div>
-										<div class="chart-wrapper col">
-											<div id="sleep_chart_day_2_3" class="chart_progress"></div>
-											<h2 class="chart_title">Start/End of Sleep</h2>
-										</div>
-									</div>
-								</div>
-
-							</div>
+							{% endfor %}
 						</div>
-
+						{% else %}
+						<h6 class="card-subtitle mb-4 text-muted">You don't have any recorded data yet.</h6>
+						{% endif %}
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-3"></div>
 		</div>
 </div>
-
 {% endblock content%}
