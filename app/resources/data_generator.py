@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import random
 from mpl_toolkits.mplot3d import Axes3D
 import argparse
+import math
 
 
 def get_value(average, happiness):
@@ -77,6 +78,7 @@ def get_all_values(happiness=None):
                 average as specified in 'ideal'.
 
     """
+
     if happiness == None:
         happiness = get_happiness()
 
@@ -103,6 +105,45 @@ def get_all_values(happiness=None):
 
 def get_happiness():
     return random.uniform(0.2,1)
+
+def get_historical_values(target, start, progression='linear',time=100):
+
+    print("target:",target,"\t\tstart:", start)
+
+    if progression == 'linear':
+        return [get_value(start + (i+1)*(target-start)/time, 0.5+(i/time/2)) for i in range(time)]
+    elif progression == 'exp':
+        return [get_value(start + (math.exp((i+1)/time)-1)/(math.exp(1)-1)*(target-start), 0.5+(i/time/2)) for i in range(time)]
+    elif progression == 'log':
+        return [get_value(start + (math.log((i+1)/time+1)/math.log(2))*(target-start), 0.5+(i/time/2)) for i in range(time)]
+    else:
+        return []
+
+def get_all_historical_values(progression='linear', time=100):
+    # Profile for the historical values starting position
+    calories = 3750
+    fat = 300
+    sugar = 250
+    greens = 0
+    protein = 450
+    carbohydrates = 800
+    food = [calories, fat, sugar, greens, protein, carbohydrates]
+
+    sleep_time = 5
+    movement_index = 600
+    sleep = [sleep_time, movement_index]
+
+    number_of_steps = 2500
+    running_km = 0
+    max_pulse = 180
+    average_pulse = 110
+    training_time = 0
+    training = [number_of_steps, running_km, max_pulse, average_pulse, training_time]
+
+    start = food + sleep + training
+
+    return [get_historical_values(ideal[i],start[i], progression, time) for i in range(len(start))]
+
 
 def get_manhattan(values):
     distance = [0 for _ in values]
@@ -202,14 +243,15 @@ ideal = ideal_food + ideal_sleep + ideal_training
 
 
 
-parser = argparse.ArgumentParser(description='Mock some data')
+# parser = argparse.ArgumentParser(description='Mock some data')
 
 
-
-
+values = get_all_historical_values(progression='log', time=1000)
+plt.plot(values[0],'bx')
+plt.show()
 
 # run_2d_sample()
-run_3d_sample()
+# run_3d_sample()
 # run_distance_sample()
 
 # if len(sys.argv)==0:
