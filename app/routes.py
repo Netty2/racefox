@@ -41,9 +41,9 @@ def load_sleep():
 		}
 	]
 	if request.args.get('view') == 'historical':
-		return render_template('sleephistorical.html', title = 'Sleep - Historical', user_data = mock_sleep_data) #TODO: Lägg till data för historical
+		return render_template('sleephistorical.html', title = 'Sleep - Historical') #TODO: Lägg till data för historical
 	else:
-		return render_template('sleeph.html', title = 'Sleep - Daily')
+		return render_template('sleep.html', title = 'Sleep - Daily', user_data = mock_sleep_data)
 
 @login_required
 @app.route("/activity")

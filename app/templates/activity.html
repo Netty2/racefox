@@ -1,5 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
+<div>
+	<center>
+	<button id="dailyButton" class ="btn btn-outline-info">Daily Activity</button>
+	<button id="historicalButton" class ="btn btn-outline-info">Historical</button>
+	</center>
+</div>
+
+<script>
+document.getElementById("dailyButton").onclick = function () {
+        location.href = "{{url_for('load_activity', view = 'daily')}}";
+    };
+
+document.getElementById("historicalButton").onclick = function () {
+        location.href = "{{url_for('load_activity', view = 'historical')}}";
+    };
+</script>
 
 <div class="container">
 	<div class="row">
