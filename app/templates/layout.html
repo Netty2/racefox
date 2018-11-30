@@ -34,7 +34,7 @@
 	        <div class="navbar-nav mr-auto">
 				<!---Ändra länkningen till nya HTML-sidor --->
 				{% if current_user.is_authenticated %}
-	          <a class="nav-item nav-link" href="{{ url_for('load_activity', view='daily') }}">Activity</a>
+	          <a class="nav-item nav-link" href="{{ url_for('load_activity') }}">Activity</a>
 	          <a class="nav-item nav-link" href="/sleep">Sleep</a>
 	          <a class="nav-item nav-link" href="/food">Food</a>
 				{% endif %}
