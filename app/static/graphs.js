@@ -1,42 +1,64 @@
 window.onload = function(){
   createFoodGraphs();
   createSleepGraphs();
+  createActivityGraphs();
 }
 
 function createSleepGraphs(){
   // sleep quality graphs
-  var carbGraphs = document.getElementsByClassName("sleep_quality_chart");
-  for (var i = 0; i < carbGraphs.length; i++){
-    var carbProgressGraph = createProgressGraph(carbGraphs[i], window.chartColors.yellow);
-    carbProgressGraph.animate(carbGraphs[i].getAttribute("data"));
+  var graphs = document.getElementsByClassName("sleep_quality_chart");
+  for (var i = 0; i < graphs.length; i++){
+    var graph = createProgressGraph(graphs[i], window.chartColors.yellow);
+    graph.animate(graphs[i].getAttribute("data"));
   }
   // slept hours graphs
-  var carbGraphs = document.getElementsByClassName("hours_slept_chart");
-  for (var i = 0; i < carbGraphs.length; i++){
-    var carbProgressGraph = createProgressGraph(carbGraphs[i], window.chartColors.orange);
-    carbProgressGraph.animate(carbGraphs[i].getAttribute("data"));
+  var graphs = document.getElementsByClassName("hours_slept_chart");
+  for (var i = 0; i < graphs.length; i++){
+    var graph = createProgressGraph(graphs[i], window.chartColors.orange);
+    graph.animate(graphs[i].getAttribute("data"));
   }
 
 }
 
 function createFoodGraphs(){
   // Carb graphs
-  var carbGraphs = document.getElementsByClassName("carb_chart");
-  for (var i = 0; i < carbGraphs.length; i++){
-    var carbProgressGraph = createProgressGraph(carbGraphs[i], window.chartColors.yellow);
-    carbProgressGraph.animate(carbGraphs[i].getAttribute("data"));
+  var graphs = document.getElementsByClassName("carb_chart");
+  for (var i = 0; i < graphs.length; i++){
+    var graph = createProgressGraph(graphs[i], window.chartColors.yellow);
+    graph.animate(graphs[i].getAttribute("data"));
   }
   // Fat graphs
-  var carbGraphs = document.getElementsByClassName("fat_chart");
-  for (var i = 0; i < carbGraphs.length; i++){
-    var carbProgressGraph = createProgressGraph(carbGraphs[i], window.chartColors.orange);
-    carbProgressGraph.animate(carbGraphs[i].getAttribute("data"));
+  var graphs = document.getElementsByClassName("fat_chart");
+  for (var i = 0; i < graphs.length; i++){
+    var graph = createProgressGraph(graphs[i], window.chartColors.orange);
+    graph.animate(graphs[i].getAttribute("data"));
   }
   // protein graphs
-  var carbGraphs = document.getElementsByClassName("protein_chart");
-  for (var i = 0; i < carbGraphs.length; i++){
-    var carbProgressGraph = createProgressGraph(carbGraphs[i], window.chartColors.red);
-    carbProgressGraph.animate(carbGraphs[i].getAttribute("data"));
+  var graphs = document.getElementsByClassName("protein_chart");
+  for (var i = 0; i < graphs.length; i++){
+    var graph = createProgressGraph(graphs[i], window.chartColors.red);
+    graph.animate(graphs[i].getAttribute("data"));
+  }
+}
+
+function createActivityGraphs(){
+  // step graphs
+  var graphs = document.getElementsByClassName("steps_chart");
+  for (var i = 0; i < graphs.length; i++){
+    var graph = createProgressGraph(graphs[i], window.chartColors.yellow);
+    graph.animate(graphs[i].getAttribute("data"));
+  }
+  // stairs graphs
+  var graphs = document.getElementsByClassName("stairs_chart");
+  for (var i = 0; i < graphs.length; i++){
+    var graph = createProgressGraph(graphs[i], window.chartColors.orange);
+    graph.animate(graphs[i].getAttribute("data"));
+  }
+  // distance graphs
+  var graphs = document.getElementsByClassName("distance_chart");
+  for (var i = 0; i < graphs.length; i++){
+    var graph = createProgressGraph(graphs[i], window.chartColors.red);
+    graph.animate(graphs[i].getAttribute("data"));
   }
 }
 
@@ -68,5 +90,5 @@ function createProgressGraph(reference, color){
   graph.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
   graph.text.style.fontSize = '1.6rem';
   graph.text.style.color =  color;
-  return graph
+  return graph;
 }
