@@ -40,18 +40,23 @@ def load_sleep():
 		"sleep_quality": 0.68
 		}
 	]
-	if current_user.is_authenticated:
-		return render_template('sleep.html', title = 'Sleep', user_data = mock_sleep_data)
+	page = request.args.get('view')
+	if page == 'historical':
+		return render_template('sleephistorical.html', title = 'Sleep - Historical', user_data = mock_sleep_data)
 	else:
-		return redirect(url_for('home'))
+		return render_template('sleeph.html', title = 'Sleep - Daily') #TODO: Lägg till data för historical
 
+@login_required
 @app.route("/activity")
 def load_activity():
-	if current_user.is_authenticated:
-		return render_template('activity.html', title = 'Activity & Training')
-	else:
-		return redirect(url_for('home'))
+	page = request.args.get('view')
+	print(page)
+	if page == 'historical':		# Om man vil se historyical view
+		return render_template('activityhistorical.html', title = 'Activity & Training - Historical')
+	else:							# Om man specar någonting annat eller ingenting
+		return render_template('activity.html', title = 'Activity and Training - Daily') #TODO: Lägg till data för historical
 
+@login_required
 @app.route("/food")
 def load_food():
 	# TODO: Get the user id and fetch the specific historic data for that user
@@ -85,10 +90,11 @@ def load_food():
 		"protein": 0.7
 		}
 	]
-	if current_user.is_authenticated:
+	page = request.args.get('view')
+	if page == 'historical':
 		return render_template('food.html', title = 'Food & Nutrition', user_data = mock_food_data)
 	else:
-		return redirect(url_for('home'))
+		return render_template('foodhistorical.html', title = 'Food & Nutrition') #TODO: Lägg till data för historical
 
 
 @app.route("/register", methods=['GET', 'POST']) # Kan hantera både GET och POST requests. POST requests sker när man skickar in inloggningsdetaljer
