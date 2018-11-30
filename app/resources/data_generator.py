@@ -134,11 +134,16 @@ def get_all_historical_values(progression='linear', time=100):
     sleep = [sleep_time, movement_index]
 
     number_of_steps = 2500
+    stairs = 2
+    distance = 2
     running_km = 0
     max_pulse = 180
     average_pulse = 110
     training_time = 0
-    training = [number_of_steps, running_km, max_pulse, average_pulse, training_time]
+    workout_calories = 50
+    
+
+    training = [number_of_steps, stairs, distance, running_km, max_pulse, average_pulse, training_time, workout_calories]
 
     start = food + sleep + training
 
@@ -150,6 +155,31 @@ def get_manhattan(values):
     for i,value  in enumerate(values):
         distance[i] = abs(ideal[i]-value)
     return distance, sum(distance)
+
+def get_tip(index, current):
+	if current <= 1.1 * ideal[index] and current >= 0.9 * ideal[index]:
+		return "You are doing great! Don't change a thing regarding " + get_name(index) + "!"
+	elif current > ideal[index]:
+		return "Focus on lowering " + get_name(index) + "!"
+	else:
+		return "Focus on increasing " + get_name(index) + "!"
+
+def get_name(index):
+	return "Calories, Fat, Sugar, Greens, Protein, Carbohydrates, Sleep time, Movement index, Number of steps, Running km, Max pulse, Average pulse, Training time".split(", ")[index].lower()
+	
+
+def get_all_tips(current):
+	tips = []
+	for i, c in enumerate(current):
+		tips.append(get_tip(i, c))
+	return tips
+	
+def get_prioritised_tips(current):
+	prio = []
+	for i, c in enumerate(current):
+		prio.append(abs(ideal[i]-c)/ideal[i])
+	
+	return [tip for _, tip in sorted(zip(prio, get_all_tips(current)), reverse=True)]
 
 def run_distance_sample():
     happy = []
@@ -231,12 +261,15 @@ ideal_sleep = [ideal_sleep_time, ideal_movement_index]
 
 # Set all training values
 ideal_number_of_steps = 10000
+ideal_stairs = 10
+ideal_distance = 12.5
 ideal_runnining_km = 5
 ideal_max_pulse = 180
 ideal_average_pulse = 70
 ideal_training_time = 1.5
+ideal_workout_calories = 800
 
-ideal_training = [ideal_number_of_steps, ideal_runnining_km, ideal_max_pulse, ideal_average_pulse, ideal_training_time]
+ideal_training = [ideal_number_of_steps, ideal_stairs, ideal_distance ,ideal_runnining_km, ideal_max_pulse, ideal_average_pulse, ideal_training_time, ideal_workout_calories]
 
 ideal = ideal_food + ideal_sleep + ideal_training
 
@@ -249,6 +282,12 @@ ideal = ideal_food + ideal_sleep + ideal_training
 values = get_all_historical_values(progression='log', time=1000)
 plt.plot(values[0],'bx')
 plt.show()
+
+current = [x*random.uniform(0.5,1.5) for x in ideal]
+
+[print(c, "/", ideal[i], "->", abs(c-ideal[i])/ideal[i] ) for i, c in enumerate(current)]
+
+[print(s) for s in get_prioritised_tips(current)]
 
 # run_2d_sample()
 # run_3d_sample()
