@@ -47,8 +47,38 @@ def load_sleep():
 
 @app.route("/activity")
 def load_activity():
+	mock_activity_data = [
+		{
+		"date": "2018-11-25",
+		"day_display_name": "Today",
+		"steps": 0.6,
+		"stairs": 0.7,
+		"distance": 0.8
+		},
+		{
+		"date": "2018-11-24",
+		"day_display_name": "Yesterday",
+		"steps": 0.6,
+		"stairs": 0.7,
+		"distance": 0.8
+		},
+		{
+		"date": "2018-11-23",
+		"day_display_name": "Friday",
+		"steps": 0.6,
+		"stairs": 0.7,
+		"distance": 0.8
+		},
+		{
+		"date": "2018-11-24",
+		"day_display_name": "Thursday",
+		"steps": 0.6,
+		"stairs": 0.7,
+		"distance": 0.8
+		}
+	]
 	if current_user.is_authenticated:
-		return render_template('activity.html', title = 'Activity & Training')
+		return render_template('activity.html', title = 'Activity & Training', user_data = mock_activity_data)
 	else:
 		return redirect(url_for('home'))
 

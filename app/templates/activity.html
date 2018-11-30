@@ -8,51 +8,34 @@
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Activity & Training</h5>
+						{% if user_data %}
 						<h6 class="card-subtitle mb-4 text-muted">Browse your activity & training history</h6>
 						<div class="days">
-
+							{% for day in user_data %}
 							<div class="single_day">
 								<div class="day_name"><p>Today</p></div>
 								<div class="container">
 									<div class="row">
 										<div class="chart-wrapper col">
-											<div id="nutrition_chart_day_1_1" class="chart_progress"></div>
-											<h2 class="chart_title">Calories</h2>
+											<div class="steps_chart chart_progress" data={{day.steps}}></div>
+											<h2 class="chart_title">Steps</h2>
 										</div>
 										<div class="chart-wrapper col">
-											<div id="nutrition_chart_day_1_2" class="chart_progress"></div>
-											<h2 class="chart_title">Sugar</h2>
+											<div class="chart_progress stairs_chart" data={{day.steps}}></div>
+											<h2 class="chart_title">Stairs</h2>
 										</div>
 										<div class="chart-wrapper col">
-											<div id="nutrition_chart_day_1_3" class="chart_progress"></div>
-											<h2 class="chart_title">Fiber</h2>
+											<div class="chart_progress distance_chart" data={{day.stairs}}></div>
+											<h2 class="chart_title">Distance</h2>
 										</div>
 									</div>
 								</div>
 							</div>
-
-							<div class="single_day">
-								<div class="day_name"><p>Yesterday</p></div>
-								<div class="container">
-									<div class="row">
-										<div class="chart-wrapper col">
-											<div id="nutrition_chart_day_2_1" class="chart_progress"></div>
-											<h2 class="chart_title">Calories</h2>
-										</div>
-										<div class="chart-wrapper col">
-											<div id="nutrition_chart_day_2_2" class="chart_progress"></div>
-											<h2 class="chart_title">Sugar</h2>
-										</div>
-										<div class="chart-wrapper col">
-											<div id="nutrition_chart_day_2_3" class="chart_progress"></div>
-											<h2 class="chart_title">Fiber</h2>
-										</div>
-									</div>
-								</div>
-
-							</div>
+							{% endfor %}
 						</div>
-
+						{% else %}
+						<h6 class="card-subtitle mb-4 text-muted">You don't have any recorded data yet.</h6>
+						{% endif %}
 					</div>
 				</div>
 			</div>
