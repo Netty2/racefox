@@ -1,1 +1,25 @@
-Sleep historical data
+{% extends "layout.html" %}
+{% block content %}
+<div>
+	<center>
+	<button id="dailyButton" class ="btn btn-outline-info">Daily Activity</button>
+	<button id="historicalButton" class ="btn btn-outline-info">Historical</button>
+	</center>
+</div>
+
+<script>
+document.getElementById("dailyButton").onclick = function () {
+        location.href = "{{url_for('load_sleep', view = 'daily')}}";
+    };
+
+document.getElementById("historicalButton").onclick = function () {
+        location.href = "{{url_for('load_sleep', view = 'historical')}}";
+    };
+</script>
+
+<center>
+<h1>Sleep Historical</h1>
+<p>IVARS KOD NEDAN</p>
+</center>
+
+{% endblock content%}
