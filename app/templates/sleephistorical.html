@@ -23,65 +23,85 @@ document.getElementById("historicalButton").onclick = function () {
 </center>
 
 
-<canvas id="line_canvas">
 
-</canvas>
-
+<canvas id="line_canvas"></canvas>
+<canvas id="line_canvas1"></canvas>
+<canvas id="line_canvas2"></canvas>
 
 <script>
-var line_config = {
-type: 'line',
-data: {
-labels: [
-'sleep_time', 'movement_index', 'number_of_steps', 'stairs', 'distance', 'running_km'
-],
-datasets: [
-{
-label: 'Greens',
-backgroundColor: window.chartColors.red,
-borderColor: window.chartColors.red,
-fill: false,
-data: [
-52, 44, 64, 22, 82, 87,
-],
-},
-{
-label: 'Sugars',
-backgroundColor: window.chartColors.orange,
-borderColor: window.chartColors.orange,
-fill: false,
-data: [
-22, 14, 34, 42, 72, 95,
-],
-},
-{
-label: 'Carbohydrates',
-backgroundColor: window.chartColors.grey,
-borderColor: window.chartColors.grey,
-fill: false,
-data: [
-21, 43, 45, 83, 26, 57,
-],
-}
+var data_set_daily = [{
+        label: 'Calories',
+        Color: '#dfdfdf',
+        fill: false,
+        data: {{data.calories.week}}
+    },
+    {
+        label: 'Fat',
+        Color: '#00b22d',
+        fill: false,
+        data: {{data.fat.week}}
+    },
+    {
+        label: 'Carbohydrates',
+        Color: '#cb9c89',
+        fill: false,
+        data: {{data.carbohydrates.week}},
+    }
+];
+var daily_labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+var month_data_set = [{
+        label: 'Calories',
+        Color: '#dfdfdf',
+        fill: false,
+        data: {{data.calories.month}}
+    },
+    {
+        label: 'Fat',
+        Color: '#00b22d',
+        fill: false,
+        data: {{data.fat.month}}
+    },
+    {
+        label: 'Carbohydrates',
+        Color: '#cb9c89',
+        fill: false,
+        data: {{data.carbohydrates.month}},
+    }
+];
+var month_labels = [
+ {% for i in range(31)[1:] %}
+ "{{ i}} day",
+ {% endfor %}
 ]
-},
-options: {
-responsive: true,
-title: {
-display: true,
-text: 'TITLE'
-},
-scales: {
-xAxes: [{
-display: true,
-}],
-yAxes: [{
-display: true,
-}]
-}
-}
-};
+
+var all_data_set = [{
+        label: 'Calories',
+        Color: '#dfdfdf',
+        fill: false,
+        data: {{data.calories.all}}
+    },
+    {
+        label: 'Fat',
+        Color: '#00b22d',
+        fill: false,
+        data: {{data.fat.all}}
+    },
+    {
+        label: 'Carbohydrates',
+        Color: '#cb9c89',
+        fill: false,
+        data: {{data.carbohydrates.all}},
+    }
+];
+
+document.addEventListener('DOMContentLoaded', function(){
+	line_chart('line_canvas', data_set_daily, daily_labels, '')
+	line_chart('line_canvas1', month_data_set, month_labels, '')
+	line_chart('line_canvas2', all_data_set, ["1m", "2m", "3m"], '')
+}, false);
 
 </script>
+
 
 {% endblock content%}

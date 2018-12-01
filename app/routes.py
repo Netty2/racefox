@@ -4,7 +4,7 @@ from app import app, bcrypt, db, mail
 from app.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
-
+from app.data_generator_clone import get_all_historical_values
 
 @app.route("/")
 @app.route("/home")
@@ -41,47 +41,103 @@ def load_sleep():
 		}
 	]
 	if request.args.get('view') == 'historical':
-		return render_template('sleephistorical.html', title = 'Sleep - Historical') #TODO: Lägg till data för historical
+		cal_data_points = get_all_historical_values()[0]
+		fat_data_points = get_all_historical_values()[1]
+		carbo_data_points = get_all_historical_values()[5]
+		calories = {
+			"week": cal_data_points[:7],
+			"month": cal_data_points[:30],
+			"all": cal_data_points
+		}
+
+		fat = {
+			"week": fat_data_points[:7],
+			"month": fat_data_points[:30],
+			"all": fat_data_points
+		}
+
+		carbohydrates = {
+			"week": carbo_data_points[:7],
+			"month": carbo_data_points[:30],
+			"all": carbo_data_points
+		}
+
+		return render_template(
+			'sleephistorical.html',
+			title='Sleep - Historical',
+			data={"calories": calories, "fat": fat, "carbohydrates": carbohydrates}
+		) #TODO: Lägg till data för historical
 	else:
 		return render_template('sleep.html', title = 'Sleep - Daily', user_data = mock_sleep_data)
 
 @login_required
 @app.route("/activity")
 def load_activity():
-    mock_activity_data = [
-        {
-            "date": "2018-11-25",
-            "day_display_name": "Today",
-            "steps": 0.6,
-            "stairs": 0.7,
-            "distance": 0.8
-        },
-        {
-            "date": "2018-11-24",
-            "day_display_name": "Yesterday",
-            "steps": 0.6,
-            "stairs": 0.7,
-            "distance": 0.8
-        },
-        {
-            "date": "2018-11-23",
-            "day_display_name": "Friday",
-            "steps": 0.6,
-            "stairs": 0.7,
-            "distance": 0.8
-        },
-        {
-            "date": "2018-11-24",
-            "day_display_name": "Thursday",
-            "steps": 0.6,
-            "stairs": 0.7,
-            "distance": 0.8
-        }
-    ]
-    if request.args.get('view') == 'historical':		# Om man vil se historyical view
-        return render_template('activityhistorical.html', title = 'Activity & Training - Historical') #TODO: Lägg till data för historical
-    else:							# Om man specar någonting annat eller ingenting
-        return render_template('activity.html', title = 'Activity and Training - Daily', user_data = mock_activity_data)
+	mock_activity_data = [
+		{
+			"date": "2018-11-25",
+			"day_display_name": "Today",
+			"steps": 0.6,
+			"stairs": 0.7,
+			"distance": 0.8
+		},
+		{
+			"date": "2018-11-24",
+			"day_display_name": "Yesterday",
+			"steps": 0.6,
+			"stairs": 0.7,
+			"distance": 0.8
+		},
+		{
+			"date": "2018-11-23",
+			"day_display_name": "Friday",
+			"steps": 0.6,
+			"stairs": 0.7,
+			"distance": 0.8
+		},
+		{
+			"date": "2018-11-24",
+			"day_display_name": "Thursday",
+			"steps": 0.6,
+			"stairs": 0.7,
+			"distance": 0.8
+		}
+	]
+	if request.args.get('view') == 'historical':
+		steps_data_points = get_all_historical_values()[8]
+		stairs_data_points = get_all_historical_values()[9]
+		distance_data_points = get_all_historical_values()[10]
+		running_data_points = get_all_historical_values()[11]
+		steps = {
+			"week": steps_data_points[:7],
+			"month": steps_data_points[:30],
+			"all": steps_data_points
+		}
+
+		stairs = {
+			"week": stairs_data_points[:7],
+			"month": stairs_data_points[:30],
+			"all": stairs_data_points
+		}
+
+		distance = {
+			"week": distance_data_points[:7],
+			"month": distance_data_points[:30],
+			"all": distance_data_points
+		}
+
+		running = {
+			"week": running_data_points[:7],
+			"month": running_data_points[:30],
+			"all": running_data_points
+		}
+		return render_template(
+			'activityhistorical.html',
+			title='Activity & Training - Historical',
+			data={"steps": steps, "stairs": stairs, "distance": distance, "running": running}
+		)
+	else:
+		return render_template('activity.html', title = 'Activity and Training - Daily', user_data = mock_activity_data)
 
 
 @login_required

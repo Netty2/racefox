@@ -12,6 +12,8 @@ flask-bcrypt = "*"
 flask-login = "*"
 flask-mail = "*"
 flask-wtf = "*"
+numpy = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.7"

@@ -20,66 +20,110 @@ document.getElementById("historicalButton").onclick = function () {
 
 <center>
 <h1>Activity Historical</h1>
-<p>IVARS KOD NEDAN</p>
 </center>
-<canvas id="line_canvas">
 
-</canvas>
+<canvas id="line_canvas"></canvas>
+<canvas id="line_canvas1"></canvas>
+<canvas id="line_canvas2"></canvas>
 
 
 <script>
-var line_config = {
-type: 'line',
-data: {
-labels: [
-'sleep_time', 'movement_index', 'number_of_steps', 'stairs', 'distance', 'running_km'
-],
-datasets: [
-{
-label: 'Calories',
-backgroundColor: window.chartColors.red,
-borderColor: window.chartColors.red,
-fill: false,
-data: [
-42, 74, 44, 92, 32, 55,
-],
-},
-{
-label: 'Fat',
-backgroundColor: window.chartColors.orange,
-borderColor: window.chartColors.orange,
-fill: false,
-data: [
-52, 34, 54, 32, 62, 75,
-],
-},
-{
-label: 'Carbohydrates',
-backgroundColor: window.chartColors.grey,
-borderColor: window.chartColors.grey,
-fill: false,
-data: [
-21, 43, 45, 23, 26, 57,
-],
-}
+var data_set_daily = [
+	{
+        label: 'Steps',
+        Color: '#dfdfdf',
+        fill: false,
+        data: {{data.steps.week}}
+    },
+    {
+        label: 'Stairs',
+        Color: '#00b22d',
+        fill: false,
+        data: {{data.stairs.week}}
+    },
+    {
+        label: 'Distance',
+        Color: '#cb9c89',
+        fill: false,
+        data: {{data.distance.week}},
+    },
+
+    {
+        label: 'Running',
+        Color: '#cb9c89',
+        fill: false,
+        data: {{data.running.week}},
+    }
+
+];
+var daily_labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+var month_data_set = [
+	{
+        label: 'Steps',
+        Color: '#dfdfdf',
+        fill: false,
+        data: {{data.steps.month}}
+    },
+    {
+        label: 'Stairs',
+        Color: '#00b22d',
+        fill: false,
+        data: {{data.stairs.month}}
+    },
+    {
+        label: 'Distance',
+        Color: '#cb9c89',
+        fill: false,
+        data: {{data.distance.month}},
+    },
+
+    {
+        label: 'Running',
+        Color: '#cb9c89',
+        fill: false,
+        data: {{data.running.month}},
+    }
+];
+var month_labels = [
+ {% for i in range(31)[1:] %}
+ "{{ i}} day",
+ {% endfor %}
 ]
-},
-options: {
-responsive: true,
-title: {
-display: true,
-text: 'TITLE'
-},
-scales: {
-xAxes: [{
-display: true,
-}],
-yAxes: [{
-display: true,
-}]
-}
-}
-};
+
+var all_data_set = [
+{
+        label: 'Steps',
+        Color: '#dfdfdf',
+        fill: false,
+        data: {{data.steps.all}}
+    },
+    {
+        label: 'Stairs',
+        Color: '#00b22d',
+        fill: false,
+        data: {{data.stairs.all}}
+    },
+    {
+        label: 'Distance',
+        Color: '#cb9c89',
+        fill: false,
+        data: {{data.distance.all}},
+    },
+
+    {
+        label: 'Running',
+        Color: '#cb9c89',
+        fill: false,
+        data: {{data.running.all}},
+    }
+];
+
+document.addEventListener('DOMContentLoaded', function(){
+	line_chart('line_canvas', data_set_daily, daily_labels, '')
+	line_chart('line_canvas1', month_data_set, month_labels, '')
+	line_chart('line_canvas2', all_data_set, ["1m", "2m", "3m"], '')
+}, false);
 
 </script>
 

@@ -145,3 +145,44 @@ window.chartColors = {
 	/* eslint-enable */
 
 }(this));
+
+
+function line_chart(elem, param_datasets, param_labels, param_title) {
+    var datasets_object = [];
+
+    for (var i = 0; i < param_datasets.length; i++) {
+        datasets_object[i] = {
+            label: param_datasets[i]['label'],
+            backgroundColor: param_datasets[i]['Color'],
+            borderColor: param_datasets[i]['Color'],
+            fill: false,
+            data: param_datasets[i]['data'],
+        }
+    }
+
+    var line_config = {
+        type: 'line',
+        data: {
+            labels: param_labels,
+            datasets: datasets_object,
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: param_title
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                }],
+                yAxes: [{
+                    display: true,
+                }]
+            }
+        }
+    };
+
+    var line_ctx = document.getElementById(elem).getContext('2d');
+    window.myLine = new Chart(line_ctx, line_config);
+}
