@@ -40,48 +40,51 @@ def load_sleep():
 		"sleep_quality": 0.68
 		}
 	]
-	if current_user.is_authenticated:
-		return render_template('sleep.html', title = 'Sleep', user_data = mock_sleep_data)
+	if request.args.get('view') == 'historical':
+		return render_template('sleephistorical.html', title = 'Sleep - Historical') #TODO: Lägg till data för historical
 	else:
-		return redirect(url_for('home'))
+		return render_template('sleep.html', title = 'Sleep - Daily', user_data = mock_sleep_data)
 
+@login_required
 @app.route("/activity")
 def load_activity():
-	mock_activity_data = [
-		{
-		"date": "2018-11-25",
-		"day_display_name": "Today",
-		"steps": 0.6,
-		"stairs": 0.7,
-		"distance": 0.8
-		},
-		{
-		"date": "2018-11-24",
-		"day_display_name": "Yesterday",
-		"steps": 0.6,
-		"stairs": 0.7,
-		"distance": 0.8
-		},
-		{
-		"date": "2018-11-23",
-		"day_display_name": "Friday",
-		"steps": 0.6,
-		"stairs": 0.7,
-		"distance": 0.8
-		},
-		{
-		"date": "2018-11-24",
-		"day_display_name": "Thursday",
-		"steps": 0.6,
-		"stairs": 0.7,
-		"distance": 0.8
-		}
-	]
-	if current_user.is_authenticated:
-		return render_template('activity.html', title = 'Activity & Training', user_data = mock_activity_data)
-	else:
-		return redirect(url_for('home'))
+    mock_activity_data = [
+        {
+            "date": "2018-11-25",
+            "day_display_name": "Today",
+            "steps": 0.6,
+            "stairs": 0.7,
+            "distance": 0.8
+        },
+        {
+            "date": "2018-11-24",
+            "day_display_name": "Yesterday",
+            "steps": 0.6,
+            "stairs": 0.7,
+            "distance": 0.8
+        },
+        {
+            "date": "2018-11-23",
+            "day_display_name": "Friday",
+            "steps": 0.6,
+            "stairs": 0.7,
+            "distance": 0.8
+        },
+        {
+            "date": "2018-11-24",
+            "day_display_name": "Thursday",
+            "steps": 0.6,
+            "stairs": 0.7,
+            "distance": 0.8
+        }
+    ]
+    if request.args.get('view') == 'historical':		# Om man vil se historyical view
+        return render_template('activityhistorical.html', title = 'Activity & Training - Historical') #TODO: Lägg till data för historical
+    else:							# Om man specar någonting annat eller ingenting
+        return render_template('activity.html', title = 'Activity and Training - Daily', user_data = mock_activity_data)
 
+
+@login_required
 @app.route("/food")
 def load_food():
 	# TODO: Get the user id and fetch the specific historic data for that user
@@ -115,10 +118,10 @@ def load_food():
 		"protein": 0.7
 		}
 	]
-	if current_user.is_authenticated:
-		return render_template('food.html', title = 'Food & Nutrition', user_data = mock_food_data)
+	if request.args.get('view') == 'historical':
+		return render_template('foodhistorical.html', title = 'Food & Nutrition - Historical') #TODO: Lägg till data för historical
 	else:
-		return redirect(url_for('home'))
+		return render_template('food.html', title = 'Food & Nutrition - Daily', user_data = mock_food_data)
 
 
 @app.route("/register", methods=['GET', 'POST']) # Kan hantera både GET och POST requests. POST requests sker när man skickar in inloggningsdetaljer

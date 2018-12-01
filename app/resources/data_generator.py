@@ -43,7 +43,7 @@ def get_value(average, happiness):
     # 10% chance to become noise
     if random.random() > 0.10:
         # Standard deviation is always 5% or more
-        sigma *= (1.05-happiness)
+        sigma *= (1.05-happiness)   # sigma = sigma * (1.05 -happiness)
     s = np.random.normal(mu, sigma)
 
     # Make sure sample is plausible
@@ -109,6 +109,13 @@ def get_happiness():
 def get_historical_values(target, start, progression='linear',time=100):
 
     print("target:",target,"\t\tstart:", start)
+
+    '''
+    Vi skulle kunna använda det för at presentera olika personers vanemönster:
+    - Linear
+    - Exponential
+    - Logarithmical
+    '''
 
     if progression == 'linear':
         return [get_value(start + (i+1)*(target-start)/time, 0.5+(i/time/2)) for i in range(time)]
@@ -279,8 +286,8 @@ ideal = ideal_food + ideal_sleep + ideal_training
 # parser = argparse.ArgumentParser(description='Mock some data')
 
 
-values = get_all_historical_values(progression='log', time=1000)
-plt.plot(values[0],'bx')
+values = get_all_historical_values(progression='linear', time=365)
+plt.plot(values[3])
 plt.show()
 
 current = [x*random.uniform(0.5,1.5) for x in ideal]

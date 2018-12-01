@@ -1,5 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
+<div>
+	<center>
+	<button id="dailyButton" class ="btn btn-outline-info">Daily Activity</button>
+	<button id="historicalButton" class ="btn btn-outline-info">Historical</button>
+	</center>
+</div>
+
+<script>
+document.getElementById("dailyButton").onclick = function () {
+        location.href = "{{url_for('load_activity', view = 'daily')}}";
+    };
+
+document.getElementById("historicalButton").onclick = function () {
+        location.href = "{{url_for('load_activity', view = 'historical')}}";
+    };
+</script>
 
 <div class="container">
 	<div class="row">
@@ -21,11 +37,11 @@
 											<h2 class="chart_title">Steps</h2>
 										</div>
 										<div class="chart-wrapper col">
-											<div class="chart_progress stairs_chart" data={{day.steps}}></div>
+											<div class="chart_progress stairs_chart" data={{day.stairs}}></div>
 											<h2 class="chart_title">Stairs</h2>
 										</div>
 										<div class="chart-wrapper col">
-											<div class="chart_progress distance_chart" data={{day.stairs}}></div>
+											<div class="chart_progress distance_chart" data={{day.distance}}></div>
 											<h2 class="chart_title">Distance</h2>
 										</div>
 									</div>
