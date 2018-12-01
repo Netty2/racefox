@@ -92,3 +92,8 @@ function createProgressGraph(reference, color){
   graph.text.style.color =  color;
   return graph;
 }
+
+ if($('#line_canvas').length != 0){
+    var line_ctx = document.getElementById('line_canvas').getContext('2d');
+    window.myLine = new Chart(line_ctx, line_config);
+ }

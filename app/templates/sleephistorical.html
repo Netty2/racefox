@@ -22,4 +22,66 @@ document.getElementById("historicalButton").onclick = function () {
 <p>IVARS KOD NEDAN</p>
 </center>
 
+
+<canvas id="line_canvas">
+
+</canvas>
+
+
+<script>
+var line_config = {
+type: 'line',
+data: {
+labels: [
+'sleep_time', 'movement_index', 'number_of_steps', 'stairs', 'distance', 'running_km'
+],
+datasets: [
+{
+label: 'Greens',
+backgroundColor: window.chartColors.red,
+borderColor: window.chartColors.red,
+fill: false,
+data: [
+52, 44, 64, 22, 82, 87,
+],
+},
+{
+label: 'Sugars',
+backgroundColor: window.chartColors.orange,
+borderColor: window.chartColors.orange,
+fill: false,
+data: [
+22, 14, 34, 42, 72, 95,
+],
+},
+{
+label: 'Carbohydrates',
+backgroundColor: window.chartColors.grey,
+borderColor: window.chartColors.grey,
+fill: false,
+data: [
+21, 43, 45, 83, 26, 57,
+],
+}
+]
+},
+options: {
+responsive: true,
+title: {
+display: true,
+text: 'TITLE'
+},
+scales: {
+xAxes: [{
+display: true,
+}],
+yAxes: [{
+display: true,
+}]
+}
+}
+};
+
+</script>
+
 {% endblock content%}

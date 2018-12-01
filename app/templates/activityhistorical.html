@@ -22,6 +22,66 @@ document.getElementById("historicalButton").onclick = function () {
 <h1>Activity Historical</h1>
 <p>IVARS KOD NEDAN</p>
 </center>
+<canvas id="line_canvas">
+
+</canvas>
+
+
+<script>
+var line_config = {
+type: 'line',
+data: {
+labels: [
+'sleep_time', 'movement_index', 'number_of_steps', 'stairs', 'distance', 'running_km'
+],
+datasets: [
+{
+label: 'Calories',
+backgroundColor: window.chartColors.red,
+borderColor: window.chartColors.red,
+fill: false,
+data: [
+42, 74, 44, 92, 32, 55,
+],
+},
+{
+label: 'Fat',
+backgroundColor: window.chartColors.orange,
+borderColor: window.chartColors.orange,
+fill: false,
+data: [
+52, 34, 54, 32, 62, 75,
+],
+},
+{
+label: 'Carbohydrates',
+backgroundColor: window.chartColors.grey,
+borderColor: window.chartColors.grey,
+fill: false,
+data: [
+21, 43, 45, 23, 26, 57,
+],
+}
+]
+},
+options: {
+responsive: true,
+title: {
+display: true,
+text: 'TITLE'
+},
+scales: {
+xAxes: [{
+display: true,
+}],
+yAxes: [{
+display: true,
+}]
+}
+}
+};
+
+</script>
 
 
 {% endblock content%}
