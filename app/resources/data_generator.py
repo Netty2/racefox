@@ -11,6 +11,7 @@ import random
 from mpl_toolkits.mplot3d import Axes3D
 import argparse
 import math
+import time
 
 
 def get_value(average, happiness):
@@ -43,7 +44,7 @@ def get_value(average, happiness):
     # 10% chance to become noise
     if random.random() > 0.10:
         # Standard deviation is always 5% or more
-        sigma *= (1.05-happiness)   # sigma = sigma * (1.05 -happiness)
+        sigma *= (1.05-happiness)
     s = np.random.normal(mu, sigma)
 
     # Make sure sample is plausible
@@ -110,13 +111,6 @@ def get_historical_values(target, start, progression='linear',time=100):
 
     print("target:",target,"\t\tstart:", start)
 
-    '''
-    Vi skulle kunna använda det för at presentera olika personers vanemönster:
-    - Linear
-    - Exponential
-    - Logarithmical
-    '''
-
     if progression == 'linear':
         return [get_value(start + (i+1)*(target-start)/time, 0.5+(i/time/2)) for i in range(time)]
     elif progression == 'exp':
@@ -172,7 +166,7 @@ def get_tip(index, current):
 		return "Focus on increasing " + get_name(index) + "!"
 
 def get_name(index):
-	return "Calories, Fat, Sugar, Greens, Protein, Carbohydrates, Sleep time, Movement index, Number of steps, Running km, Max pulse, Average pulse, Training time".split(", ")[index].lower()
+	return "Calories, Fat, Sugar, Greens, Protein, Carbohydrates, Sleep time, Movement index, Number of steps, Number of stairs, Distance, Running km, Max pulse, Average pulse, Training time, Workout calories".split(", ")[index].lower()
 	
 
 def get_all_tips(current):
@@ -277,7 +271,6 @@ ideal_training_time = 1.5
 ideal_workout_calories = 800
 
 ideal_training = [ideal_number_of_steps, ideal_stairs, ideal_distance ,ideal_runnining_km, ideal_max_pulse, ideal_average_pulse, ideal_training_time, ideal_workout_calories]
-
 ideal = ideal_food + ideal_sleep + ideal_training
 
 
@@ -285,10 +278,12 @@ ideal = ideal_food + ideal_sleep + ideal_training
 
 # parser = argparse.ArgumentParser(description='Mock some data')
 
-
-values = get_all_historical_values(progression='linear', time=365)
-plt.plot(values[3])
-plt.show()
+start = time.time()
+values = get_all_historical_values(progression='log', time=365)
+end = time.time()
+print("Total time:", (end-start), "ms")
+# plt.plot(values[0],'bx')
+# plt.show()
 
 current = [x*random.uniform(0.5,1.5) for x in ideal]
 
@@ -307,5 +302,6 @@ current = [x*random.uniform(0.5,1.5) for x in ideal]
 #     print("-3d\t\t: Run 3D sample plot")
 #     print("-2d\t\t: Run 2D sample plot")
 #     print("-m\t\t: Run manhattan sample plot")
+
 #     print("Argument")
 #     print("<integer>\t\t: Number of datapoints to print")
