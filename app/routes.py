@@ -41,31 +41,15 @@ def load_sleep():
 		}
 	]
 	if request.args.get('view') == 'historical':
-		cal_data_points = get_all_historical_values()[0]
-		fat_data_points = get_all_historical_values()[1]
-		carbo_data_points = get_all_historical_values()[5]
-		calories = {
-			"week": cal_data_points[:7],
-			"month": cal_data_points[:30],
-			"all": cal_data_points
+		sleep_time_data_points = get_all_historical_values()[6]
+
+		sleep_time = {
+			"week": sleep_time_data_points[:7],
+			"month": sleep_time_data_points[:30],
+			"all": sleep_time_data_points
 		}
 
-		fat = {
-			"week": fat_data_points[:7],
-			"month": fat_data_points[:30],
-			"all": fat_data_points
-		}
-
-		carbohydrates = {
-			"week": carbo_data_points[:7],
-			"month": carbo_data_points[:30],
-			"all": carbo_data_points
-		}
-
-		return render_template(
-			'sleephistorical.html',
-			title='Sleep - Historical',
-			data={"calories": calories, "fat": fat, "carbohydrates": carbohydrates}
+		return render_template('sleephistorical.html', title='Sleep - Historical', data={"sleep_time": sleep_time}
 		) #TODO: Lägg till data för historical
 	else:
 		return render_template('sleep.html', title = 'Sleep - Daily', user_data = mock_sleep_data)
@@ -104,37 +88,31 @@ def load_activity():
 		}
 	]
 	if request.args.get('view') == 'historical':
-		steps_data_points = get_all_historical_values()[8]
-		stairs_data_points = get_all_historical_values()[9]
-		distance_data_points = get_all_historical_values()[10]
-		running_data_points = get_all_historical_values()[11]
-		steps = {
-			"week": steps_data_points[:7],
-			"month": steps_data_points[:30],
-			"all": steps_data_points
+		avg_pulse_data_points = get_all_historical_values()[13]
+		max_pulse_data_points = get_all_historical_values()[12]
+		workout_calories_data_points = get_all_historical_values()[15]
+		running_km_data_points = get_all_historical_values()[11]
+
+		avg_pulse = {
+			"month": avg_pulse_data_points[:30],
 		}
 
-		stairs = {
-			"week": stairs_data_points[:7],
-			"month": stairs_data_points[:30],
-			"all": stairs_data_points
+		max_pulse = {
+			"month": max_pulse_data_points[:30],
 		}
 
-		distance = {
-			"week": distance_data_points[:7],
-			"month": distance_data_points[:30],
-			"all": distance_data_points
+		workout_calories = {
+			"month": workout_calories_data_points[:30],
 		}
 
-		running = {
-			"week": running_data_points[:7],
-			"month": running_data_points[:30],
-			"all": running_data_points
+		running_km = {
+			"month": running_km_data_points[:30],
 		}
+
 		return render_template(
 			'activityhistorical.html',
 			title='Activity & Training - Historical',
-			data={"steps": steps, "stairs": stairs, "distance": distance, "running": running}
+			data={"avg_pulse": avg_pulse, "max_pulse": max_pulse, "workout_calories": workout_calories, "running_km": running_km}
 		)
 	else:
 		return render_template('activity.html', title = 'Activity and Training - Daily', user_data = mock_activity_data)
@@ -175,7 +153,42 @@ def load_food():
 		}
 	]
 	if request.args.get('view') == 'historical':
-		return render_template('foodhistorical.html', title = 'Food & Nutrition - Historical') #TODO: Lägg till data för historical
+		calories_data_points = get_all_historical_values()[0]
+		carbohydrates_data_points = get_all_historical_values()[5]
+		protein_data_points = get_all_historical_values()[4]
+		fat_data_points = get_all_historical_values()[1]
+		sugar_data_points = get_all_historical_values()[2]
+		greens_data_points = get_all_historical_values()[3]
+
+		calories = {
+			"month": calories_data_points[:30],
+		}
+		carbohydrates = {
+			"month": carbohydrates_data_points[:30],
+		}
+		protein = {
+			"month": protein_data_points[:30],
+		}
+		fat = {
+			"month": fat_data_points[:30],
+		}
+		sugar = {
+			"month": sugar_data_points[:30],
+		}
+		greens = {
+			"month": greens_data_points[:30],
+		}
+		return render_template(
+			'foodhistorical.html',
+			title = 'Food & Nutrition - Historical',
+			data={
+				"calories": calories,
+				"carbohydrates": carbohydrates,
+				"protein": protein,
+				"fat": fat,
+				"sugar": sugar,
+				"greens": greens}
+		)
 	else:
 		return render_template('food.html', title = 'Food & Nutrition - Daily', user_data = mock_food_data)
 

@@ -19,67 +19,86 @@ document.getElementById("historicalButton").onclick = function () {
 
 <center>
 <h1>Food Historical</h1>
-<p>IVARS KOD NEDAN</p>
 </center>
 
-<canvas id="line_canvas">
-
-</canvas>
+<canvas id="line_canvas"></canvas>
+<canvas id="line_canvas1"></canvas>
+<canvas id="line_canvas2"></canvas>
+<canvas id="line_canvas3"></canvas>
+<canvas id="line_canvas4"></canvas>
+<canvas id="line_canvas5"></canvas>
 
 
 <script>
-var line_config = {
-type: 'line',
-data: {
-labels: [
-'sleep_time', 'movement_index', 'number_of_steps', 'stairs', 'distance', 'running_km'
-],
-datasets: [
-{
-label: 'Protein',
-backgroundColor: window.chartColors.red,
-borderColor: window.chartColors.red,
-fill: false,
-data: [
-40, 70, 50, 12, 36, 55,
-],
-},
-{
-label: 'Fats',
-backgroundColor: window.chartColors.orange,
-borderColor: window.chartColors.orange,
-fill: false,
-data: [
-52, 34, 54, 32, 62, 75,
-],
-},
-{
-label: 'Carbohydrates',
-backgroundColor: window.chartColors.grey,
-borderColor: window.chartColors.grey,
-fill: false,
-data: [
-12, 34, 54, 32, 62, 75,
-],
-}
+var calories_data_set = [
+	{
+        label: 'Calories',
+        Color: '#C0C0C0',
+        fill: false,
+        data: {{data.calories.month}}
+    }
+];
+
+var carbohydrates_data_set = [
+	{
+        label: 'Carbohydrates',
+        Color: '#FF0000',
+        fill: false,
+        data: {{data.carbohydrates.month}}
+    }
+];
+
+var protein_data_set = [
+	{
+        label: 'Protein',
+        Color: '#800000',
+        fill: false,
+        data: {{data.protein.month}}
+    }
+];
+
+var fat_data_set = [
+	{
+        label: 'Fat',
+        Color: '#FFFF00',
+        fill: false,
+        data: {{data.fat.month}}
+    }
+];
+
+var sugar_data_set = [
+	{
+        label: 'Sugar',
+        Color: '#808000',
+        fill: false,
+        data: {{data.sugar.month}}
+    }
+];
+
+var greens_data_set = [
+	{
+        label: 'Greens',
+        Color: '#00FF00',
+        fill: false,
+        data: {{data.greens.month}}
+    }
+];
+
+
+var month_labels = [
+ {% for i in range(31)[1:] %}
+ "{{ i}} day",
+ {% endfor %}
 ]
-},
-options: {
-responsive: true,
-title: {
-display: true,
-text: 'TITLE'
-},
-scales: {
-xAxes: [{
-display: true,
-}],
-yAxes: [{
-display: true,
-}]
-}
-}
-};
+
+document.addEventListener('DOMContentLoaded', function(){
+	line_chart('line_canvas', calories_data_set, month_labels, '')
+	line_chart('line_canvas1', carbohydrates_data_set, month_labels, '')
+	line_chart('line_canvas3', protein_data_set, month_labels, '')
+	line_chart('line_canvas3', fat_data_set, month_labels, '')
+	line_chart('line_canvas4', sugar_data_set, month_labels, '')
+	line_chart('line_canvas5', greens_data_set, month_labels, '')
+}, false);
 
 </script>
 

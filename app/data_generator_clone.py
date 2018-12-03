@@ -128,11 +128,11 @@ def get_all_historical_values(progression='linear', time=100):
     greens = 0
     protein = 450
     carbohydrates = 800
-    food = [calories, fat, sugar, greens, protein, carbohydrates]
+    food = [calories, fat, sugar, greens, protein, carbohydrates] # 5
 
     sleep_time = 5
     movement_index = 600
-    sleep = [sleep_time, movement_index]
+    sleep = [sleep_time, movement_index] # 7
 
     number_of_steps = 2500
     stairs = 2

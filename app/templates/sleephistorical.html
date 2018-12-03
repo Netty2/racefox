@@ -30,43 +30,19 @@ document.getElementById("historicalButton").onclick = function () {
 
 <script>
 var data_set_daily = [{
-        label: 'Calories',
-        Color: '#dfdfdf',
+        label: 'Sleep Time',
+        Color: '#FF00FF',
         fill: false,
-        data: {{data.calories.week}}
-    },
-    {
-        label: 'Fat',
-        Color: '#00b22d',
-        fill: false,
-        data: {{data.fat.week}}
-    },
-    {
-        label: 'Carbohydrates',
-        Color: '#cb9c89',
-        fill: false,
-        data: {{data.carbohydrates.week}},
+        data: {{data.sleep_time.week}}
     }
 ];
 var daily_labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 var month_data_set = [{
-        label: 'Calories',
-        Color: '#dfdfdf',
+        label: 'Sleep Time',
+        Color: '#000080',
         fill: false,
-        data: {{data.calories.month}}
-    },
-    {
-        label: 'Fat',
-        Color: '#00b22d',
-        fill: false,
-        data: {{data.fat.month}}
-    },
-    {
-        label: 'Carbohydrates',
-        Color: '#cb9c89',
-        fill: false,
-        data: {{data.carbohydrates.month}},
+        data: {{data.sleep_time.month}}
     }
 ];
 var month_labels = [
@@ -76,22 +52,10 @@ var month_labels = [
 ]
 
 var all_data_set = [{
-        label: 'Calories',
-        Color: '#dfdfdf',
+        label: 'Sleep Time',
+        Color: '#800080',
         fill: false,
-        data: {{data.calories.all}}
-    },
-    {
-        label: 'Fat',
-        Color: '#00b22d',
-        fill: false,
-        data: {{data.fat.all}}
-    },
-    {
-        label: 'Carbohydrates',
-        Color: '#cb9c89',
-        fill: false,
-        data: {{data.carbohydrates.all}},
+        data: {{data.sleep_time.all}}
     }
 ];
 

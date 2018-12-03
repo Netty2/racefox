@@ -25,104 +25,58 @@ document.getElementById("historicalButton").onclick = function () {
 <canvas id="line_canvas"></canvas>
 <canvas id="line_canvas1"></canvas>
 <canvas id="line_canvas2"></canvas>
+<canvas id="line_canvas3"></canvas>
 
 
 <script>
-var data_set_daily = [
+var avg_pulse_data_set = [
 	{
-        label: 'Steps',
-        Color: '#dfdfdf',
+        label: 'Average Pulse',
+        Color: '#008000',
         fill: false,
-        data: {{data.steps.week}}
-    },
-    {
-        label: 'Stairs',
-        Color: '#00b22d',
-        fill: false,
-        data: {{data.stairs.week}}
-    },
-    {
-        label: 'Distance',
-        Color: '#cb9c89',
-        fill: false,
-        data: {{data.distance.week}},
-    },
-
-    {
-        label: 'Running',
-        Color: '#cb9c89',
-        fill: false,
-        data: {{data.running.week}},
-    }
-
-];
-var daily_labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-
-var month_data_set = [
-	{
-        label: 'Steps',
-        Color: '#dfdfdf',
-        fill: false,
-        data: {{data.steps.month}}
-    },
-    {
-        label: 'Stairs',
-        Color: '#00b22d',
-        fill: false,
-        data: {{data.stairs.month}}
-    },
-    {
-        label: 'Distance',
-        Color: '#cb9c89',
-        fill: false,
-        data: {{data.distance.month}},
-    },
-
-    {
-        label: 'Running',
-        Color: '#cb9c89',
-        fill: false,
-        data: {{data.running.month}},
+        data: {{data.avg_pulse.month}}
     }
 ];
+
+var max_pulse_data_set = [
+	{
+        label: 'Max Pulse',
+        Color: '#00FFFF',
+        fill: false,
+        data: {{data.max_pulse.month}}
+    }
+];
+
+var workout_calories_data_set = [
+	{
+        label: 'Workout Calories',
+        Color: '#008080',
+        fill: false,
+        data: {{data.workout_calories.month}}
+    }
+];
+
+var running_km_data_set = [
+	{
+        label: 'Running Km',
+        Color: '#0000FF',
+        fill: false,
+        data: {{data.running_km.month}}
+    }
+];
+
+
 var month_labels = [
  {% for i in range(31)[1:] %}
  "{{ i}} day",
  {% endfor %}
 ]
 
-var all_data_set = [
-{
-        label: 'Steps',
-        Color: '#dfdfdf',
-        fill: false,
-        data: {{data.steps.all}}
-    },
-    {
-        label: 'Stairs',
-        Color: '#00b22d',
-        fill: false,
-        data: {{data.stairs.all}}
-    },
-    {
-        label: 'Distance',
-        Color: '#cb9c89',
-        fill: false,
-        data: {{data.distance.all}},
-    },
-
-    {
-        label: 'Running',
-        Color: '#cb9c89',
-        fill: false,
-        data: {{data.running.all}},
-    }
-];
-
 document.addEventListener('DOMContentLoaded', function(){
-	line_chart('line_canvas', data_set_daily, daily_labels, '')
-	line_chart('line_canvas1', month_data_set, month_labels, '')
-	line_chart('line_canvas2', all_data_set, ["1m", "2m", "3m"], '')
+	line_chart('line_canvas', avg_pulse_data_set, month_labels, '')
+	line_chart('line_canvas1', max_pulse_data_set, month_labels, '')
+	line_chart('line_canvas3', workout_calories_data_set, month_labels, '')
+	line_chart('line_canvas3', running_km_data_set, month_labels, '')
 }, false);
 
 </script>
