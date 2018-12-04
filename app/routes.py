@@ -1,5 +1,5 @@
 from flask import render_template, url_for, flash, redirect, request
-from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
+from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, UserInputForm
 from app import app, bcrypt, db, mail
 from app.models import User
 from flask_login import login_user, current_user, logout_user, login_required
@@ -204,10 +204,21 @@ def register():
 		user = User(email=form.email.data, password=hashed_password)						# Inloggningsdetaljer sparas i ett objekt via clasen User från models.py som sparar parametrarna (ID, email, PW)
 		db.session.add(user)	# SQLAlchemy kommando för att adda objektet
 		db.session.commit() 	# commitar till databasen
-
-		flash('Account created for ' + form.email.data +'. You can now login!', 'success')		# Givet att allt ovan fungerar så kommer en grön ('success') banner upp i toppen av sidan och konfirmerar att det gick
-		return redirect(url_for('login'))												# För att samtidigt redirecta dig till login-sidan (url_for är en modul importerad från flask)
+		flash('Account created for ' + form.email.data +'. Please enter information below', 'info')		# Givet att allt ovan fungerar så kommer en grön ('success') banner upp i toppen av sidan och konfirmerar att det gick
+		return redirect(url_for('user_input', user=user.email))												# För att samtidigt redirecta dig till login-sidan (url_for är en modul importerad från flask)
 	return render_template('register.html', title='Register', form=form) # Om ingen är inloggad så renderas register.html tillsammans med RegistrationForm som hanterar registreringstrafiken
+
+
+@app.route("/userinput", methods=['GET', 'POST'])
+def user_input():
+	useremail = request.args.get("user")
+	user = User.query.filter_by(email=useremail).first()
+	form = UserInputForm()
+	if form.validate_on_submit():
+		login_user(user)
+		flash(f'You are now logged in and ready to go as {useremail}', 'success')
+		return redirect(url_for('home'))
+	return render_template('userinputpage.html', title="User input", form=form)
 
 
 @app.route("/login", methods=['GET', 'POST']) # Kan hantera både GET och POST requests. POST requests sker när man skickar in inloggningsdetaljer
