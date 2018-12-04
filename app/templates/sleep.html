@@ -1,23 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="switch-navigation">
-<ul class="nav justify-content-center">
-  <li class="nav-item">
-    <a id="dailyButton" class="nav-link active" href="#">DAY BY DAY</a>
-  </li>
-		<div class="vertical-line"></div>
-  <li class="nav-item">
-    <a id="historyButton" class="nav-link" href="#">GRAPHS</a>
-  </li>
-</ul>
-<div class="switch-navigation">
+<div>
+	<center>
+	<button id="dailyButton" class ="btn btn-outline-info">Daily Activity</button>
+	<button id="historicalButton" class ="btn btn-outline-info">Historical</button>
+	</center>
+</div>
 
 <script>
 document.getElementById("dailyButton").onclick = function () {
         location.href = "{{url_for('load_sleep', view = 'daily')}}";
     };
 
-document.getElementById("historyButton").onclick = function () {
+document.getElementById("historicalButton").onclick = function () {
         location.href = "{{url_for('load_sleep', view = 'historical')}}";
     };
 </script>
@@ -37,8 +32,22 @@ document.getElementById("historyButton").onclick = function () {
 								<div class="container">
 									<div class="row">
 										<div class="chart-wrapper col">
-											<div class="hours_slept_chart chart_progress", data={{day.hours_slept}}></div>
-											<h2 class="chart_title">Hours</h2>
+											<canvas id="canvas_{{loop.index}}"></canvas>
+											<script>
+												document.addEventListener('DOMContentLoaded', function(){
+												var data_{{loop.index}} = [{
+													label: 'Hours Overslept/Underslept',
+													backgroundColor: "#800000",
+													borderColor: "#800000",
+													borderWidth: 1,
+													data: [
+													{{day.hours_slept}}
+													]
+													}]
+
+													bar_chart("#canvas_{{loop.index}}", data_{{loop.index}}, ["Sleep"], "")
+												}, false);
+											</script>
 										</div>
 										<div class="chart-wrapper col">
 											<div class="sleep_quality_chart chart_progress", data={{day.sleep_quality}}></div>

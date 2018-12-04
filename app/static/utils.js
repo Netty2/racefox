@@ -146,7 +146,6 @@ window.chartColors = {
 
 }(this));
 
-
 function line_chart(elem, param_datasets, param_labels, param_title) {
     var datasets_object = [];
 
@@ -186,3 +185,47 @@ function line_chart(elem, param_datasets, param_labels, param_title) {
     var line_ctx = document.getElementById(elem).getContext('2d');
     window.myLine = new Chart(line_ctx, line_config);
 }
+
+function bar_chart(chart_elem, chart_dataset, chart_labels, chart_title) {
+        if ($(chart_elem).length == 0) {
+            console.error('Chart element [' + chart_elem + '] could not be found! ');
+            return;
+        }
+
+        if ($(chart_elem)[0].nodeName.toLowerCase() != "canvas") {
+            console.error('Chart element must be canvas instead of "' + $(chart_elem)[0].nodeName.toLowerCase() + '"');
+            return;
+        }
+
+        if (!($.isArray(chart_dataset))) {
+            console.error('Chart Dataset type must be an array!');
+            return;
+        }
+
+        if (!($.isArray(chart_labels))) {
+            console.error('Chart labels type must be an array!');
+            return;
+        }
+
+        var chart_dataset = {
+            labels: chart_labels,
+            datasets: chart_dataset
+        };
+
+
+        var ctx = $(chart_elem)[0].getContext('2d');
+        window.myBar = new Chart(ctx, {
+            type: 'bar',
+            data: chart_dataset,
+            options: {
+                responsive: false,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: chart_title
+                }
+            }
+        });
+    }

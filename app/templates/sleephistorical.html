@@ -1,29 +1,24 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="switch-navigation">
-<ul class="nav justify-content-center">
-  <li class="nav-item">
-    <a id="dailyButton" class="nav-link" href="#">DAY BY DAY</a>
-  </li>
-		<div class="vertical-line"></div>
-  <li class="nav-item">
-    <a id="historyButton" class="nav-link active" href="#">GRAPHS</a>
-  </li>
-</ul>
-<div class="switch-navigation">
+<div>
+	<center>
+	<button id="dailyButton" class ="btn btn-outline-info">Daily Activity</button>
+	<button id="historicalButton" class ="btn btn-outline-info">Historical</button>
+	</center>
+</div>
 
 <script>
 document.getElementById("dailyButton").onclick = function () {
         location.href = "{{url_for('load_sleep', view = 'daily')}}";
     };
 
-document.getElementById("historyButton").onclick = function () {
+document.getElementById("historicalButton").onclick = function () {
         location.href = "{{url_for('load_sleep', view = 'historical')}}";
     };
 </script>
 
 <center>
-<h5>Sleep Historical</h5>
+<h1>Sleep Historical</h1>
 </center>
 
 
@@ -59,14 +54,14 @@ var all_data_set = [{
         label: 'Sleep Time',
         Color: '#800080',
         fill: false,
-        data: {{data.sleep_time.all}}
+        data: {{data.sleep_time.month}}
     }
 ];
 
 document.addEventListener('DOMContentLoaded', function(){
 	line_chart('line_canvas', data_set_daily, daily_labels, '')
 	line_chart('line_canvas1', month_data_set, month_labels, '')
-	line_chart('line_canvas2', all_data_set, ["1m", "2m", "3m"], '')
+	line_chart('line_canvas2', all_data_set, ["3m", "6m", "9m", "12m", "15m", "18m"], '')
 }, false);
 
 </script>

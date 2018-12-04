@@ -6,11 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 	<link rel="shortcut icon" type="image/png" href="{{url_for('static', filename='profilbild-racefox.png')}}"/>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'hamburger.css') }}")>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 	<script src="{{ url_for('static', filename='utils.js') }}"></script>
     <!-- I detta block kan du lägga in ytterlgare rader till <head> -->
     {% block head %}
@@ -28,13 +27,9 @@
 	  <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
 	    <div class="container">
 	      <a class="navbar-brand mr-4" href="/"><img src="https://racefox.se/assets/racefox-logos/Racefox-White-Shaded-250.png" height = "45" class = "img-responsive" alt="Racefox"></img></a>
-        <div>
-        <button class="navbar-toggler hamburger hamburger--spin" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-          </span>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
 	      </button>
-      </div>
 
 	      <div class="collapse navbar-collapse" id="navbarToggle">
 	        <div class="navbar-nav mr-auto">
@@ -58,16 +53,6 @@
 	      </div>
 	    </div>
 	  </nav>
-    <script>
-    // Look for .hamburger
-    var hamburger = document.querySelector(".hamburger");
-    // On click
-    hamburger.addEventListener("click", function() {
-      // Toggle class "is-active"
-      hamburger.classList.toggle("is-active");
-      // Do something else, like open/close menu
-    });
-  </script>
 	</header>
 
 	<main role="main" class="container">
@@ -94,7 +79,6 @@
     <script src="{{ url_for('static', filename='progressbar.min.js') }}"></script>
   	<script src="{{ url_for('static', filename='Chart.js') }}"></script>
   	<script src="{{ url_for('static', filename='graphs.js') }}"></script>
-
 
     {% block body %}
     {% endblock body %}
