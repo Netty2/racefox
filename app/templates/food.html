@@ -1,24 +1,28 @@
 {% extends "layout.html" %}
 {% block content %}
-<div>
-	<center>
-	<button id="dailyButton" class ="btn btn-outline-info">Daily Activity</button>
-	<button id="historicalButton" class ="btn btn-outline-info">Historical</button>
-	</center>
-</div>
+<div class="switch-navigation">
+<ul class="nav justify-content-center">
+  <li class="nav-item">
+    <a id="dailyButton" class="nav-link active" href="#">DAY BY DAY</a>
+  </li>
+		<div class="vertical-line"></div>
+  <li class="nav-item">
+    <a id="historyButton" class="nav-link" href="#">GRAPHS</a>
+  </li>
+</ul>
+<div class="switch-navigation">
 
 <script>
 document.getElementById("dailyButton").onclick = function () {
         location.href = "{{url_for('load_food', view = 'daily')}}";
     };
 
-document.getElementById("historicalButton").onclick = function () {
+document.getElementById("historyButton").onclick = function () {
         location.href = "{{url_for('load_food', view = 'historical')}}";
     };
 </script>
 <div class="container">
 		<div class="row">
-			<div class="col-lg-3"></div>
 			<div class="col-lg-6">
 				<div class="card">
 					<div class="card-body">
