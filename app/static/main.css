@@ -111,6 +111,48 @@ a.article-title:hover {
   border-bottom: 0.15rem solid #ef7e2d;
 }
 
+/* HIDE RADIO */
+#wellnessForm [type=radio] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+#wellnessForm img {
+  width: 2rem;
+  height: auto;
+  padding-bottom: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+
+#wellnessForm label {
+  margin: auto;
+  display: inline-block;
+}
+
+#wellnessForm .smileys {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+#wellnessForm button {
+  background-color: #ef7e2d;
+  margin: auto;
+  display: block;
+  border: None;
+}
+
+#wellnessForm [type=radio] + img {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+#wellnessForm [type=radio]:checked + img {
+  border-bottom: 0.2rem solid #ef7e2d;
+  margin-bottom: 0rem;
+}
+
 body{
 		font-family: Raleway, Helvetica, sans-serif;}
 		.chart_progress {

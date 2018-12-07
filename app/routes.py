@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, jsonify
 from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, UserInputForm
 from app import app, bcrypt, db, mail
 from app.models import User
@@ -9,7 +9,13 @@ from app.data_generator_clone import get_all_historical_values
 @app.route("/")
 @app.route("/home")
 def home():
-	return render_template('home.html', title='Home')
+	# TODO: get user data containing notifications and AI-generated tips
+	mock_home_data = {
+		"coach_messages": ["eat a snack", "Do yoga", "Take a 10 mile walk"],
+		"daily_question": True
+	}
+	# TODO: get the daily_question attribute from the actual user, so we know wether to show it or not for that day.
+	return render_template('home.html', title='Home', user_data = mock_home_data)
 
 @app.route("/sleep")
 def load_sleep():
@@ -275,7 +281,7 @@ def reset_request():
 		return redirect(url_for('login'))
 	return render_template('reset_request.html', title='Reset Password', form=form)
 
-
+@app.route('/')
 
 def send_reset_email(user):
 	token = user.get_reset_token() # Skapar en unik "token" mha av User-objektet, googla detta för att få klarthet. Utan parameter så blir default livslängd 30min
@@ -308,3 +314,11 @@ def reset_token(token):
 		flash('Your password has been reset! You can now login', 'success')
 		return redirect(url_for('login'))	# Redirectar dig till login så att du kan logga in med det nya lösenordet
 	return render_template('reset_token.html', title='Reset Password', form=form)	# Renderar reset_token.html
+
+
+@app.route("/report-wellness", methods=['GET', 'POST'])
+def report_wellness():
+	if current_user.is_authenticated:
+		print("user data was recorded", request.form["wellness"])
+		# TODO: In some way, set the user to already have answered the form
+		return jsonify({"message": "success"})
