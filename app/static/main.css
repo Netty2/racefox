@@ -153,6 +153,19 @@ a.article-title:hover {
   margin-bottom: 0rem;
 }
 
+#selected-cluster {
+    border: 2px solid #ef7e2d;
+    border-radius: 4px;
+    width: 50%;
+    background-color: #ef7e2d;
+}
+
+.clusters:hover {
+    border: 2px solid #ef7e2d;
+    border-radius: 4px;
+    width: 50%;
+}
+
 body{
 		font-family: Raleway, Helvetica, sans-serif;}
 		.chart_progress {

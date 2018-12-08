@@ -12,8 +12,9 @@ def home():
 	# TODO: get user data containing notifications and AI-generated tips
 	mock_home_data = {
 		"coach_messages": ["eat a snack", "Do yoga", "Take a 10 mile walk"],
-		"daily_question": True
-	}
+		"daily_question": True,
+		"clusters": ["Cluster 1 : 78%", "Cluster 2 : 59%", "Cluster 3 : 43%", "Cluster 4 : 19%", "Cluster 4 : 9%"]
+ 	}
 	# TODO: get the daily_question attribute from the actual user, so we know wether to show it or not for that day.
 	return render_template('home.html', title='Home', user_data = mock_home_data)
 
@@ -257,7 +258,6 @@ def logout():
 def account():
 	form = UpdateAccountForm()
 	if form.validate_on_submit():
-		print(current_user)
 		if bcrypt.check_password_hash(current_user.password, form.old_password.data):
 			new_hashed_password = bcrypt.generate_password_hash(form.new_password.data).decode('utf-8')
 			current_user.password = new_hashed_password
