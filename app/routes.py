@@ -322,3 +322,9 @@ def report_wellness():
 		print("user data was recorded", request.form["wellness"])
 		# TODO: In some way, set the user to already have answered the form
 		return jsonify({"message": "success"})
+
+@app.route("/nerd-data")
+def nerd_data():
+	f = open("/home/ericto/Desktop/RaceFox/app/data/burger_user_100d.csv",'r')
+	data = "".join([line for line in f])
+	return render_template("parallel_coordinates.html", title="Nerd data", csv_content=data)

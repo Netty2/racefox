@@ -185,12 +185,12 @@ def get_prioritised_tips(current):
 def save_as_csv(data, name):
     f = open('../data/' + name + '.csv', 'w')
     headers = ["time"]+[get_name(i) for i in range(16)]
-    headers = ";".join(headers)+"\n"
+    headers = ",".join(headers)+"\n"
     f.write(headers)
     data_with_newline = data+[["\n" for _ in data[0]]]
-    csv = [[str(row[i])+";" for row in data_with_newline] for i in range(len(data_with_newline[0]))]
+    csv = [[str(row[i])+"," for row in data_with_newline] for i in range(len(data_with_newline[0]))]
     # print("".join(csv[0])[:-1])
-    [f.write(str(i)+";"+"".join(row)[:-1]) for i, row in enumerate(csv)]
+    [f.write(str(i)+","+"".join(row)[:-1]) for i, row in enumerate(csv)]
     # f.write(csv)
     f.close()
 
