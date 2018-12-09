@@ -21,7 +21,7 @@ class UserInputForm(FlaskForm):
 	length = IntegerField("Height", render_kw={"placeholder": "cm"})
 	weight = IntegerField("Weight", render_kw={"placeholder": "kg"})
 	gender = RadioField('Gender', choices=[('M', 'Male'), ('F', 'Female')])
-	submit = SubmitField('Submit user input')
+	submit = SubmitField('Submit')
 
 # Form som används för att ta emot input när en användare loggar in
 class LoginForm(FlaskForm):
