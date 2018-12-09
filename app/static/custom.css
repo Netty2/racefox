@@ -104,6 +104,7 @@ center {
  .nav_pills center button.btn.active {
     background-color: #465460 !important;
     color: #fff !important;
+    font-weight: 400;
 }
  .nav_pills {
     width: 100% !important;

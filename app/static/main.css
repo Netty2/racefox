@@ -177,8 +177,8 @@ a.article-title:hover {
 body{
 		font-family: Raleway, Helvetica, sans-serif;}
 		.chart_progress {
-			max-width: 160px;
-			margin: 20px auto;
+			max-width: 70px;
+			margin: 8px auto;
 			position: relative;
 		}
 		.coach_img {
@@ -209,6 +209,7 @@ body{
 			font-weight: 400;
 			text-transform: uppercase;
 			margin-top: -8px;
+      margin-top: 5px;
 		}
 		.day_name p {
 			margin: 0;
@@ -233,3 +234,16 @@ body{
 			top: 12px;
 			margin: 0 auto;
 		}
+
+
+    .parameter_number {
+      font-family: 'Graduate', cursive;
+      margin: auto;
+      text-align: center;
+      display: block;
+      font-size: 0.7rem;
+    }
+
+    .chart-wrapper {
+      margin: auto;
+    }
