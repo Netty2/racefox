@@ -194,6 +194,21 @@ def save_as_csv(data, name):
     # f.write(csv)
     f.close()
 
+# def open_csv(name):
+#     f = open('../data/' + name + '.csv', 'r')
+# 	data = "".join([line for line in f])
+#     f.close()
+#     return data
+
+def get_csv(data):
+    output = ""
+    headers = ["time"]+[get_name(i) for i in range(16)]
+    headers = ",".join(headers)+"\n"
+    output += headers
+    data_with_newline = data+[["\n" for _ in data[0]]]
+    csv = [[str(row[i])+"," for row in data_with_newline] for i in range(len(data_with_newline[0]))]
+    output += "".join([(str(i)+","+"".join(row)[:-1]) for i, row in enumerate(csv)])
+    return output
 
 def run_distance_sample():
     happy = []
@@ -287,7 +302,8 @@ ideal_training = [ideal_number_of_steps, ideal_stairs, ideal_distance ,ideal_run
 ideal = ideal_food + ideal_sleep + ideal_training
 
 
-save_as_csv(get_all_historical_values(), "burger_user_100d")
+# save_as_csv(get_all_historical_values(), "burger_user_100d")
+print(get_csv(get_all_historical_values()))
 
 # parser = argparse.ArgumentParser(description='Mock some data')
 

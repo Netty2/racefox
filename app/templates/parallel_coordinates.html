@@ -4,7 +4,16 @@
 
 {% extends "layout.html" %}
 {% block content %}
+ <!--
+ Usage under GNU GPLv3.
 
+ Original author:       Mike Bostock
+ Modified by:           Jason Davies, Eric Törnqvist
+ Changes:               Modified to use different .csv-file and to load it as
+                        a string with d3.csv.parse(string) instead of
+                        d3.csv(url, callback).
+
+ -->
 <style>
 
 svg {
