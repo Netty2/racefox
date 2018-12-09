@@ -173,6 +173,11 @@ a.article-title:hover {
   display: block;
   border: None;
 }
+#gender{
+  list-style-type: none;
+  list-style: none;
+  padding: 0;
+}
 
 body{
 		font-family: Raleway, Helvetica, sans-serif;}
