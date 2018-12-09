@@ -22,15 +22,15 @@ document.getElementById("historyButton").onclick = function () {
     };
 </script>
 
-<center>
-<h5>Sleep Historical</h5>
-</center>
-
-
-
-<canvas id="line_canvas"></canvas>
-<canvas id="line_canvas1"></canvas>
-<canvas id="line_canvas2"></canvas>
+<div class="pills_wrapper">
+	<div class="nav_pills">
+		<center>
+			<button id="show_week" class ="btn btn-outline-info">Week</button>
+			<button id="show_month" class ="btn btn-outline-info">Month</button>
+			<button id="show_year" class ="btn btn-outline-info">Year</button>
+		</center>
+	</div>
+</div>
 
 <script>
 var data_set_daily = [{
@@ -41,7 +41,6 @@ var data_set_daily = [{
     }
 ];
 var daily_labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-
 var month_data_set = [{
         label: 'Sleep Time',
         Color: '#000080',
@@ -54,7 +53,11 @@ var month_labels = [
  "{{ i}} day",
  {% endfor %}
 ]
-
+var year_labels = [
+ {% for i in range(13)[1:] %}
+ "{{ i}} month",
+ {% endfor %}
+]
 var all_data_set = [{
         label: 'Sleep Time',
         Color: '#800080',
@@ -62,13 +65,11 @@ var all_data_set = [{
         data: {{data.sleep_time.month}}
     }
 ];
-
 document.addEventListener('DOMContentLoaded', function(){
 	line_chart('line_canvas', data_set_daily, daily_labels, '')
 	line_chart('line_canvas1', month_data_set, month_labels, '')
-	line_chart('line_canvas2', all_data_set, ["3m", "6m", "9m", "12m", "15m", "18m"], '')
+	line_chart('line_canvas2', all_data_set, year_labels, '')
 }, false);
-
 </script>
 
 
