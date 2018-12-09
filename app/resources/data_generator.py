@@ -208,7 +208,7 @@ def get_csv(data):
     data_with_newline = data+[["\n" for _ in data[0]]]
     csv = [[str(row[i])+"," for row in data_with_newline] for i in range(len(data_with_newline[0]))]
     output += "".join([(str(i)+","+"".join(row)[:-1]) for i, row in enumerate(csv)])
-    return output
+    return output.replace(",\n", "\n")
 
 def run_distance_sample():
     happy = []
