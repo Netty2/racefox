@@ -25,7 +25,7 @@ body {
 						<div class="coach">
 							<div class="coach_img"><img src="{{ url_for('static', filename='speed-icon.svg') }}" alt=""></div>
 							<h5 class="coach-title">Daily Progress</h5>
-							<p id="question">Follow the tips from the AI-coach to increase your score.</p>
+							<p>Follow the tips from the AI-coach to increase your score.</p>
 
 							<div id="today_chart" class="chart_progress"></div>
 							{% if user_data.daily_question %}
@@ -108,7 +108,7 @@ $("#wellnessform").submit(function(e) {
            data: form.serialize(), // serializes the form's elements.
            success: function(data)
            {
-               $("#wellnessform").hide();
+							 $("#wellnessform").hide();
 							 $("#question").hide();
 							 $("#daily_assessment").append( "<p>Done!</p>" );
            }

@@ -33,20 +33,26 @@ document.getElementById("historyButton").onclick = function () {
 						<div class="days">
 							{% for day in user_data %}
 							<div class="single_day">
-								<div class="day_name"><p>{{day.day_display_name}}</p></div>
+								<div class="day_name"><p>{{day.date}}</p></div>
 								<div class="container">
 									<div class="row">
-										<div class="chart-wrapper col">
-											<div class="carb_chart chart_progress", data={{day.carbohydrates}}></div>
-											<h2 class="chart_title">Carbs</h2>
+										<div class="chart-wrapper">
+                      <h2 class="chart_title">Carbs</h2>
+											<div class="carb_chart chart_progress", data={{day.carbs/day.carbs_goal}}></div>
+                      <span class="parameter_number">{{day.carbs}}g</span>
+                      <span class="parameter_number">Goal: {{day.carbs_goal}}g</span>
 										</div>
-										<div class="chart-wrapper col">
-											<div class="fat_chart chart_progress", data={{day.fat}}></div>
-											<h2 class="chart_title">Fat</h2>
+										<div class="chart-wrapper">
+                      <h2 class="chart_title">Fat</h2>
+                      <div class="fat_chart chart_progress", data={{day.fat/day.fat_goal}}></div>
+                      <span class="parameter_number">{{day.fat}}g</span>
+                      <span class="parameter_number">Goal: {{day.fat_goal}}g</span>
 										</div>
-										<div class="chart-wrapper col">
-											<div class="protein_chart chart_progress", data={{day.protein}}></div>
-											<h2 class="chart_title">Protein</h2>
+										<div class="chart-wrapper">
+                      <h2 class="chart_title">Protein</h2>
+											<div class="protein_chart chart_progress", data={{day.protein/day.protein_goal}}></div>
+                      <span class="parameter_number">{{day.protein}}g</span>
+                      <span class="parameter_number">Goal: {{day.protein_goal}}g</span>
 										</div>
 									</div>
 								</div>

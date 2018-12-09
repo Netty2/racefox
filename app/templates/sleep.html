@@ -33,30 +33,20 @@ document.getElementById("historyButton").onclick = function () {
 						<div class="days">
 							{% for day in user_data %}
 							<div class="single_day">
-								<div class="day_name"><p>{{day.day_display_name}}</p></div>
+								<div class="day_name"><p>{{day.date}}</p></div>
 								<div class="container">
 									<div class="row">
 										<div class="chart-wrapper col">
-											<canvas id="canvas_{{loop.index}}"></canvas>
-											<script>
-												document.addEventListener('DOMContentLoaded', function(){
-												var data_{{loop.index}} = [{
-													label: 'Hours Overslept/Underslept',
-													backgroundColor: "#800000",
-													borderColor: "#800000",
-													borderWidth: 1,
-													data: [
-													{{day.hours_slept}}
-													]
-													}]
-
-													bar_chart("#canvas_{{loop.index}}", data_{{loop.index}}, ["Sleep"], "")
-												}, false);
-											</script>
+                      <h2 class="chart_title">Hours</h2>
+                      <div class="hours_slept_chart chart_progress", data={{day.sleep/day.sleep_goal}}></div>
+                      <span class="parameter_number">{{day.sleep}} h</span>
+                      <span class="parameter_number">goal: {{day.sleep_goal}} h</span>
 										</div>
 										<div class="chart-wrapper col">
-											<div class="sleep_quality_chart chart_progress", data={{day.sleep_quality}}></div>
-											<h2 class="chart_title">Quality</h2>
+                      <h2 class="chart_title">Quality</h2>
+											<div class="sleep_quality_chart chart_progress", data={{day.sleep_quality/day.sleep_quality_goal}}></div>
+                      <span class="parameter_number">{{day.sleep_quality}}</span>
+                      <span class="parameter_number">goal: {{day.sleep_quality_goal}}</span>
 										</div>
 									</div>
 								</div>
