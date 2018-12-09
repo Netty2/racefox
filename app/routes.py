@@ -95,36 +95,30 @@ def load_activity():
 		}
 	]
 	if request.args.get('view') == 'historical':
-		avg_pulse_data_points = get_all_historical_values()[13]
-		max_pulse_data_points = get_all_historical_values()[12]
-		workout_calories_data_points = get_all_historical_values()[15]
-		running_km_data_points = get_all_historical_values()[11]
+		stairs_data_points = get_all_historical_values()[9]
+		steps_data_points = get_all_historical_values()[8]
+		distance_data_points = get_all_historical_values()[15]
 
-		avg_pulse = {
-			"week": avg_pulse_data_points[:7],
-			"month": avg_pulse_data_points[:30],
-			"year": avg_pulse_data_points,
+		stairs = {
+			"week": stairs_data_points[:7],
+			"month": stairs_data_points[:30],
+			"year": stairs_data_points,
 		}
-		max_pulse = {
-			"week": max_pulse_data_points[:7],
-			"month": max_pulse_data_points[:30],
-			"year": max_pulse_data_points,
+		steps = {
+			"week": steps_data_points[:7],
+			"month": steps_data_points[:30],
+			"year": steps_data_points,
 		}
-		workout_calories = {
-			"week": workout_calories_data_points[:7],
-			"month": workout_calories_data_points[:30],
-			"year": workout_calories_data_points,
-		}
-		running_km = {
-			"week": running_km_data_points[:7],
-			"month": running_km_data_points[:30],
-			"year": running_km_data_points,
+		distance = {
+			"week": distance_data_points[:7],
+			"month": distance_data_points[:30],
+			"year": distance_data_points,
 		}
 
 		return render_template(
 			'activityhistorical.html',
 			title='Activity & Training - Historical',
-			data={"avg_pulse": avg_pulse, "max_pulse": max_pulse, "workout_calories": workout_calories, "running_km": running_km}
+			data={"stairs": stairs, "steps": steps, "distance": distance}
 		)
 	else:
 		return render_template('activity.html', title = 'Activity and Training - Daily', user_data = mock_activity_data)
