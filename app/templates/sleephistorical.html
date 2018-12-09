@@ -24,12 +24,20 @@ document.getElementById("historyButton").onclick = function () {
 
 <div class="pills_wrapper">
 	<div class="nav_pills">
-		<center>
+    <center>
 			<button id="show_week" class ="btn btn-outline-info">Week</button>
 			<button id="show_month" class ="btn btn-outline-info">Month</button>
 			<button id="show_year" class ="btn btn-outline-info">Year</button>
-		</center>
+    </center>
 	</div>
+  <div class="nav_pill_content week">
+    <canvas id="line_canvas"></canvas>
+  </div>
+  <div class="nav_pill_content month">
+  	<canvas id="line_canvas1"></canvas>
+  </div>
+  <div class="nav_pill_content year">
+  	<canvas id="line_canvas2"></canvas>
 </div>
 
 <script>
