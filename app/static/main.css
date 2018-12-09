@@ -167,6 +167,13 @@ a.article-title:hover {
     width: 50%;
 }
 
+#userInputForm {
+  background-color: #ef7e2d;
+  margin: auto;
+  display: block;
+  border: None;
+}
+
 body{
 		font-family: Raleway, Helvetica, sans-serif;}
 		.chart_progress {

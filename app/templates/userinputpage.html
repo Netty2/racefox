@@ -1,4 +1,13 @@
 {% extends "layout.html" %}
+{% block head %}
+<script>
+    $("#userInputForm").click(function() {
+    $('html,body').animate({
+        scrollTop: $(".content-section").offset().top},
+        'slow');
+});
+</script>
+{% endblock head %}
 {% block content %}
 	<div class="coach">
 		<div class="coach_img"><img src="{{ url_for('static', filename='analysis.png') }}" alt=""></div>
@@ -7,6 +16,7 @@
 			<li>Skriv några sköna rader här om varför vi behöver information om dig</li>
 			<li>Lägg in charten som Anton ritat för att visa långsiktiga planen med det</li>
 		</ul>
+        <button id="userInputForm" type="submit" class="btn btn-primary">I understand</button>
 	</div>
 	<div class="content-section">
 		<form method="POST" action="">
