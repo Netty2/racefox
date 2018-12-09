@@ -18,50 +18,14 @@ body {
 					<div class="card-body">
 						<h5 class="card-title">Today's Goal</h5>
 						<h6 class="card-subtitle mb-4 text-muted">View today's progress. Follow the tips to reach your maximum potential.</h6>
-
 						<div id="today_chart" class="chart_progress"></div>
-						{% if user_data.daily_question %}
-						<div class="coach" id="daily_assessment">
-							<div class="coach_img"><img src="{{ url_for('static', filename='heart-rate-icon.svg')}}" alt="question"></div>
-							<h5 class="coach-title">Daily Assessment</h5>
-							<p id="question">Overall, how well did you feel yesterday?</p>
-							<form action="/report-wellness" id="wellnessform" method="post">
-								<div class="smileys">
-									<label>
-										<input type="radio" name="wellness" value="1">
-										<img src="/static/smileys/1.svg">
-									</label>
-									<label>
-										<input type="radio" name="wellness" value="2">
-										<img src="/static/smileys/2.svg">
-									</label>
-									<label>
-										<input type="radio" name="wellness" value="3">
-										<img src="/static/smileys/3.svg">
-									</label>
-									<label>
-										<input type="radio" name="wellness" value="4">
-										<img src="/static/smileys/4.svg">
-									</label>
-									<label>
-										<input type="radio" name="wellness" value="5">
-										<img src="/static/smileys/5.svg">
-									</label>
-								</div>
-								<div "submitContainer">
-									<button type="submit" class="btn btn-primary">Submit</button>
-								</div>
-							</form>
-
-						</div>
-						{% endif %}
 						<div class="coach">
 							<div class="coach_img"><img src="{{ url_for('static', filename='coach-icon.svg') }}" alt=""></div>
-							<h5 class="coach-title">Coach</h5>
+							<h4 class="coach-title">Coach</h4>
 							<ul>
-								{% for message in user_data.coach_messages%}
-								<li>{{message}}</li>
-								{% endfor %}
+								<li>Eat a snack.</li>
+								<li>Do yoga.</li>
+								<li>Take a 10mile walk.</li>
 							</ul>
 						</div>
 					</div>
@@ -70,33 +34,26 @@ body {
 			<div class="col-lg-3"></div>
 		</div>
 </div>
-<script>
-// Make AJAX call for daily assesment
-$("#wellnessform").submit(function(e) {
-    var form = $(this);
-    var url = form.attr('action');
-		console.log("did it");
-    $.ajax({
-           type: "POST",
-           url: url,
-           data: form.serialize(), // serializes the form's elements.
-           success: function(data)
-           {
-               $("#wellnessform").hide();
-							 $("#question").hide();
-							 $("#daily_assessment").append( "<p>Done!</p>" );
-           }
-         });
-    e.preventDefault(); // avoid to execute the actual submit of the form.
-});
-</script>
 <script src="{{ url_for('static', filename='progressbar.min.js') }}"></script>
 <script src="{{ url_for('static', filename='utils.js') }}"></script>
 <script src="{{ url_for('static', filename='main.js') }}"></script>
 {% else %}
-<div id="login-button" class="col-md-4 text-center">
-  <a href="{{ url_for('login') }}"><button type="button" class="btn btn-primary btn-lg"><span>Log in</span></button></a>
+
+<div class="loginform-wrapper">
+	<div class="loginform-content">
+		<div id="login-button" class="text-center">
+  			<a href="{{ url_for('login') }}"><button type="button" class="btn btn-primary btn-lg"><span>Log in</span></button></a>
+		</div>
+	</div>
 </div>
+<style>#login-button .btn {
+    padding: 26px 60px;
+    font-size: 1.65rem;
+    line-height: 1.5;
+    border-radius: 5px;
+    text-transform: uppercase;
+    text-align: center;
+}</style>
 {% endif %}
 
 {% endblock content%}

@@ -1,40 +1,77 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="switch-navigation">
-<ul class="nav justify-content-center">
-  <li class="nav-item">
-    <a id="dailyButton" class="nav-link" href="#">DAY BY DAY</a>
-  </li>
-		<div class="vertical-line"></div>
-  <li class="nav-item">
-    <a id="historyButton" class="nav-link active" href="#">GRAPHS</a>
-  </li>
-</ul>
-<div class="switch-navigation">
+<div class="content-wrapper">
+<div>
+	<center>
+	<button id="dailyButton" class="btn btn-outline-info">Daily Activity</button>
+	<button id="historicalButton" class="active btn btn-outline-info">Historical</button>
+	</center>
+	<script>
+	document.getElementById("dailyButton").onclick = function () {
+			location.href = "{{url_for('load_activity', view = 'daily')}}";
+		};
 
+	document.getElementById("historicalButton").onclick = function () {
+			location.href = "{{url_for('load_activity', view = 'historical')}}";
+		};
+	</script>
+</div>
+
+
+<div class="pills_wrapper">
+	<div class="nav_pills">
+		<center>
+			<button id="show_week" class ="btn btn-outline-info">Week</button>
+			<button id="show_month" class ="btn btn-outline-info">Month</button>
+			<button id="show_year" class ="btn btn-outline-info">Year</button>
+		</center>
+	</div>
+
+
+	<div class="nav_pill_content week">
+		<canvas id="avg_pulse_week_chart"></canvas>
+		<canvas id="max_pulse_week_chart"></canvas>
+		<canvas id="workout_calories_week_chart"></canvas>
+		<canvas id="running_km_week_chart"></canvas>
+	</div>
+	<div class="nav_pill_content month">
+		<canvas id="avg_pulse_month_chart"></canvas>
+		<canvas id="max_pulse_month_chart"></canvas>
+		<canvas id="workout_calories_month_chart"></canvas>
+		<canvas id="running_km_month_chart"></canvas>
+	</div>
+
+
+	<div class="nav_pill_content year">
+		<canvas id="avg_pulse_year_chart"></canvas>
+		<canvas id="max_pulse_year_chart"></canvas>
+		<canvas id="workout_calories_year_chart"></canvas>
+		<canvas id="running_km_year_chart"></canvas>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
 <script>
-document.getElementById("dailyButton").onclick = function () {
-        location.href = "{{url_for('load_activity', view = 'daily')}}";
-    };
-
-document.getElementById("historyButton").onclick = function () {
-        location.href = "{{url_for('load_activity', view = 'historical')}}";
-    };
-</script>
-
-
-<center>
-<h1>Activity Historical</h1>
-</center>
-
-<canvas id="line_canvas"></canvas>
-<canvas id="line_canvas1"></canvas>
-<canvas id="line_canvas2"></canvas>
-<canvas id="line_canvas3"></canvas>
-
-
-<script>
-var avg_pulse_data_set = [
+var avg_pulse_week_data_set = [
+	{
+        label: 'Average Pulse',
+        Color: '#008000',
+        fill: false,
+        data: {{data.avg_pulse.week}}
+    }
+];
+var avg_pulse_month_data_set = [
 	{
         label: 'Average Pulse',
         Color: '#008000',
@@ -43,7 +80,26 @@ var avg_pulse_data_set = [
     }
 ];
 
-var max_pulse_data_set = [
+var avg_pulse_year_data_set = [
+	{
+        label: 'Average Pulse',
+        Color: '#008000',
+        fill: false,
+        data: {{data.avg_pulse.year}}
+    }
+];
+
+
+var max_pulse_week_data_set = [
+	{
+        label: 'Max Pulse',
+        Color: '#00FFFF',
+        fill: false,
+        data: {{data.max_pulse.week}}
+    }
+];
+
+var max_pulse_month_data_set = [
 	{
         label: 'Max Pulse',
         Color: '#00FFFF',
@@ -52,7 +108,25 @@ var max_pulse_data_set = [
     }
 ];
 
-var workout_calories_data_set = [
+var max_pulse_year_data_set = [
+	{
+        label: 'Max Pulse',
+        Color: '#00FFFF',
+        fill: false,
+        data: {{data.max_pulse.year}}
+    }
+];
+
+var workout_calories_week_data_set = [
+	{
+        label: 'Workout Calories',
+        Color: '#008080',
+        fill: false,
+        data: {{data.workout_calories.week}}
+    }
+];
+
+var workout_calories_month_data_set = [
 	{
         label: 'Workout Calories',
         Color: '#008080',
@@ -61,12 +135,39 @@ var workout_calories_data_set = [
     }
 ];
 
-var running_km_data_set = [
+var workout_calories_year_data_set = [
+	{
+        label: 'Workout Calories',
+        Color: '#008080',
+        fill: false,
+        data: {{data.workout_calories.year}}
+    }
+];
+
+var running_km_week_data_set = [
+	{
+        label: 'Running Km',
+        Color: '#0000FF',
+        fill: false,
+        data: {{data.running_km.week}}
+    }
+];
+
+var running_km_month_data_set = [
 	{
         label: 'Running Km',
         Color: '#0000FF',
         fill: false,
         data: {{data.running_km.month}}
+    }
+];
+
+var running_km_year_data_set = [
+	{
+        label: 'Running Km',
+        Color: '#0000FF',
+        fill: false,
+        data: {{data.running_km.year}}
     }
 ];
 
@@ -77,14 +178,39 @@ var month_labels = [
  {% endfor %}
 ]
 
+var year_labels = [
+ {% for i in range(13)[1:] %}
+ "{{ i}} month",
+ {% endfor %}
+]
+
+var week_labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
 document.addEventListener('DOMContentLoaded', function(){
-	line_chart('line_canvas', avg_pulse_data_set, month_labels, '')
-	line_chart('line_canvas1', max_pulse_data_set, month_labels, '')
-	line_chart('line_canvas3', workout_calories_data_set, month_labels, '')
-	line_chart('line_canvas3', running_km_data_set, month_labels, '')
+	// Average Pulse Charts
+	line_chart('avg_pulse_week_chart', avg_pulse_week_data_set, week_labels, '')
+	line_chart('avg_pulse_month_chart', avg_pulse_month_data_set, month_labels, '')
+	line_chart('avg_pulse_year_chart', avg_pulse_year_data_set, year_labels, '')
+
+	// Max Pulse Charts
+	line_chart('max_pulse_week_chart', max_pulse_week_data_set, week_labels, '')
+	line_chart('max_pulse_month_chart', max_pulse_month_data_set, month_labels, '')
+	line_chart('max_pulse_year_chart', max_pulse_year_data_set, year_labels, '')
+
+	// Average Pulse Charts
+	line_chart('workout_calories_week_chart', workout_calories_week_data_set, week_labels, '')
+	line_chart('workout_calories_month_chart', workout_calories_month_data_set, month_labels, '')
+	line_chart('workout_calories_year_chart', workout_calories_year_data_set, year_labels, '')
+
+	// Average Pulse Charts
+	line_chart('running_km_week_chart', running_km_week_data_set, week_labels, '')
+	line_chart('running_km_month_chart', running_km_month_data_set, month_labels, '')
+	line_chart('running_km_year_chart', running_km_year_data_set, year_labels, '')
+
+
 }, false);
 
 </script>
 
-
+</div>
 {% endblock content%}

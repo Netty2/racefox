@@ -142,7 +142,7 @@ def get_all_historical_values(progression='linear', time=100):
     average_pulse = 110
     training_time = 0
     workout_calories = 50
-
+    
 
     training = [number_of_steps, stairs, distance, running_km, max_pulse, average_pulse, training_time, workout_calories]
 
@@ -167,33 +167,20 @@ def get_tip(index, current):
 
 def get_name(index):
 	return "Calories, Fat, Sugar, Greens, Protein, Carbohydrates, Sleep time, Movement index, Number of steps, Number of stairs, Distance, Running km, Max pulse, Average pulse, Training time, Workout calories".split(", ")[index].lower()
-
+	
 
 def get_all_tips(current):
 	tips = []
 	for i, c in enumerate(current):
 		tips.append(get_tip(i, c))
 	return tips
-
+	
 def get_prioritised_tips(current):
 	prio = []
 	for i, c in enumerate(current):
 		prio.append(abs(ideal[i]-c)/ideal[i])
-
+	
 	return [tip for _, tip in sorted(zip(prio, get_all_tips(current)), reverse=True)]
-
-def save_as_csv(data, name):
-    f = open('../data/' + name + '.csv', 'w')
-    headers = ["time"]+[get_name(i) for i in range(16)]
-    headers = ",".join(headers)+"\n"
-    f.write(headers)
-    data_with_newline = data+[["\n" for _ in data[0]]]
-    csv = [[str(row[i])+"," for row in data_with_newline] for i in range(len(data_with_newline[0]))]
-    # print("".join(csv[0])[:-1])
-    [f.write(str(i)+","+"".join(row)[:-1]) for i, row in enumerate(csv)]
-    # f.write(csv)
-    f.close()
-
 
 def run_distance_sample():
     happy = []
@@ -287,22 +274,22 @@ ideal_training = [ideal_number_of_steps, ideal_stairs, ideal_distance ,ideal_run
 ideal = ideal_food + ideal_sleep + ideal_training
 
 
-save_as_csv(get_all_historical_values(), "burger_user_100d")
+
 
 # parser = argparse.ArgumentParser(description='Mock some data')
 
-# start = time.time()
-# values = get_all_historical_values(progression='log', time=365)
-# end = time.time()
-# print("Total time:", (end-start), "ms")
-# # plt.plot(values[0],'bx')
-# # plt.show()
-#
-# current = [x*random.uniform(0.5,1.5) for x in ideal]
-#
-# [print(c, "/", ideal[i], "->", abs(c-ideal[i])/ideal[i] ) for i, c in enumerate(current)]
-#
-# [print(s) for s in get_prioritised_tips(current)]
+start = time.time()
+values = get_all_historical_values(progression='log', time=365)
+end = time.time()
+print("Total time:", (end-start), "ms")
+# plt.plot(values[0],'bx')
+# plt.show()
+
+current = [x*random.uniform(0.5,1.5) for x in ideal]
+
+[print(c, "/", ideal[i], "->", abs(c-ideal[i])/ideal[i] ) for i, c in enumerate(current)]
+
+[print(s) for s in get_prioritised_tips(current)]
 
 # run_2d_sample()
 # run_3d_sample()

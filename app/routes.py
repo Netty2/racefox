@@ -1,5 +1,5 @@
-from flask import render_template, url_for, flash, redirect, request, jsonify
-from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, UserInputForm
+from flask import render_template, url_for, flash, redirect, request
+from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from app import app, bcrypt, db, mail
 from app.models import User
 from flask_login import login_user, current_user, logout_user, login_required
@@ -9,13 +9,7 @@ from app.data_generator_clone import get_all_historical_values
 @app.route("/")
 @app.route("/home")
 def home():
-	# TODO: get user data containing notifications and AI-generated tips
-	mock_home_data = {
-		"coach_messages": ["eat a snack", "Do yoga", "Take a 10 mile walk"],
-		"daily_question": True
-	}
-	# TODO: get the daily_question attribute from the actual user, so we know wether to show it or not for that day.
-	return render_template('home.html', title='Home', user_data = mock_home_data)
+	return render_template('home.html', title='Home')
 
 @app.route("/sleep")
 def load_sleep():
@@ -100,19 +94,27 @@ def load_activity():
 		running_km_data_points = get_all_historical_values()[11]
 
 		avg_pulse = {
+			"week": avg_pulse_data_points[:7],
 			"month": avg_pulse_data_points[:30],
+			"year": avg_pulse_data_points,
 		}
 
 		max_pulse = {
+			"week": max_pulse_data_points[:7],
 			"month": max_pulse_data_points[:30],
+			"year": max_pulse_data_points,
 		}
 
 		workout_calories = {
+			"week": workout_calories_data_points[:7],
 			"month": workout_calories_data_points[:30],
+			"year": workout_calories_data_points,
 		}
 
 		running_km = {
+			"week": running_km_data_points[:7],
 			"month": running_km_data_points[:30],
+			"year": running_km_data_points,
 		}
 
 		return render_template(
@@ -167,22 +169,37 @@ def load_food():
 		greens_data_points = get_all_historical_values()[3]
 
 		calories = {
+			"week": calories_data_points[:7],
 			"month": calories_data_points[:30],
+			"year": calories_data_points,
 		}
 		carbohydrates = {
+			"week": carbohydrates_data_points[:7],
 			"month": carbohydrates_data_points[:30],
+			"year": carbohydrates_data_points,
+
 		}
 		protein = {
+			"week": protein_data_points[:7],
 			"month": protein_data_points[:30],
+			"year": protein_data_points,
 		}
 		fat = {
+			"week": fat_data_points[:7],
 			"month": fat_data_points[:30],
+			"year": fat_data_points,
+
 		}
 		sugar = {
+			"week": sugar_data_points[:7],
 			"month": sugar_data_points[:30],
+			"year": sugar_data_points,
+
 		}
 		greens = {
+			"week": greens_data_points[:7],
 			"month": greens_data_points[:30],
+			"year": greens_data_points,
 		}
 		return render_template(
 			'foodhistorical.html',
@@ -210,21 +227,10 @@ def register():
 		user = User(email=form.email.data, password=hashed_password)						# Inloggningsdetaljer sparas i ett objekt via clasen User från models.py som sparar parametrarna (ID, email, PW)
 		db.session.add(user)	# SQLAlchemy kommando för att adda objektet
 		db.session.commit() 	# commitar till databasen
-		flash('Account created for ' + form.email.data +'. Please enter information below', 'info')		# Givet att allt ovan fungerar så kommer en grön ('success') banner upp i toppen av sidan och konfirmerar att det gick
-		return redirect(url_for('user_input', user=user.email))												# För att samtidigt redirecta dig till login-sidan (url_for är en modul importerad från flask)
+
+		flash('Account created for ' + form.email.data +'. You can now login!', 'success')		# Givet att allt ovan fungerar så kommer en grön ('success') banner upp i toppen av sidan och konfirmerar att det gick
+		return redirect(url_for('login'))												# För att samtidigt redirecta dig till login-sidan (url_for är en modul importerad från flask)
 	return render_template('register.html', title='Register', form=form) # Om ingen är inloggad så renderas register.html tillsammans med RegistrationForm som hanterar registreringstrafiken
-
-
-@app.route("/userinput", methods=['GET', 'POST'])
-def user_input():
-	useremail = request.args.get("user")
-	user = User.query.filter_by(email=useremail).first()
-	form = UserInputForm()
-	if form.validate_on_submit():
-		login_user(user)
-		flash(f'You are now logged in and ready to go as {useremail}', 'success')
-		return redirect(url_for('home'))
-	return render_template('userinputpage.html', title="User input", form=form)
 
 
 @app.route("/login", methods=['GET', 'POST']) # Kan hantera både GET och POST requests. POST requests sker när man skickar in inloggningsdetaljer
@@ -281,7 +287,7 @@ def reset_request():
 		return redirect(url_for('login'))
 	return render_template('reset_request.html', title='Reset Password', form=form)
 
-@app.route('/')
+
 
 def send_reset_email(user):
 	token = user.get_reset_token() # Skapar en unik "token" mha av User-objektet, googla detta för att få klarthet. Utan parameter så blir default livslängd 30min
@@ -314,17 +320,3 @@ def reset_token(token):
 		flash('Your password has been reset! You can now login', 'success')
 		return redirect(url_for('login'))	# Redirectar dig till login så att du kan logga in med det nya lösenordet
 	return render_template('reset_token.html', title='Reset Password', form=form)	# Renderar reset_token.html
-
-
-@app.route("/report-wellness", methods=['GET', 'POST'])
-def report_wellness():
-	if current_user.is_authenticated:
-		print("user data was recorded", request.form["wellness"])
-		# TODO: In some way, set the user to already have answered the form
-		return jsonify({"message": "success"})
-
-@app.route("/nerd-data")
-def nerd_data():
-	f = open("/home/ericto/Desktop/RaceFox/app/data/burger_user_100d.csv",'r')
-	data = "".join([line for line in f])
-	return render_template("parallel_coordinates.html", title="Nerd data", csv_content=data)

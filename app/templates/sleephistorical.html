@@ -1,36 +1,44 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="switch-navigation">
-<ul class="nav justify-content-center">
-  <li class="nav-item">
-    <a id="dailyButton" class="nav-link" href="#">DAY BY DAY</a>
-  </li>
-		<div class="vertical-line"></div>
-  <li class="nav-item">
-    <a id="historyButton" class="nav-link active" href="#">GRAPHS</a>
-  </li>
-</ul>
-<div class="switch-navigation">
+<div class="content-wrapper">
+<div>
+	<center>
+	<button id="dailyButton" class ="btn btn-outline-info">Daily Activity</button>
+	<button id="historicalButton" class ="active btn btn-outline-info">Historical</button>
+	</center>
+</div>
 
 <script>
 document.getElementById("dailyButton").onclick = function () {
         location.href = "{{url_for('load_sleep', view = 'daily')}}";
     };
 
-document.getElementById("historyButton").onclick = function () {
+document.getElementById("historicalButton").onclick = function () {
         location.href = "{{url_for('load_sleep', view = 'historical')}}";
     };
 </script>
 
-<center>
-<h5>Sleep Historical</h5>
-</center>
+<div class="pills_wrapper">
+	<div class="nav_pills">
+		<center>
+			<button id="show_week" class ="btn btn-outline-info">Week</button>
+			<button id="show_month" class ="btn btn-outline-info">Month</button>
+			<button id="show_year" class ="btn btn-outline-info">Year</button>
+		</center>
+	</div>
 
 
 
-<canvas id="line_canvas"></canvas>
-<canvas id="line_canvas1"></canvas>
-<canvas id="line_canvas2"></canvas>
+
+<div class="nav_pill_content week">
+	<canvas id="line_canvas"></canvas>
+</div>
+<div class="nav_pill_content month">
+	<canvas id="line_canvas1"></canvas>
+</div>
+<div class="nav_pill_content year">
+	<canvas id="line_canvas2"></canvas>
+</div>
 
 <script>
 var data_set_daily = [{
@@ -55,6 +63,12 @@ var month_labels = [
  {% endfor %}
 ]
 
+var year_labels = [
+ {% for i in range(13)[1:] %}
+ "{{ i}} month",
+ {% endfor %}
+]
+
 var all_data_set = [{
         label: 'Sleep Time',
         Color: '#800080',
@@ -66,10 +80,10 @@ var all_data_set = [{
 document.addEventListener('DOMContentLoaded', function(){
 	line_chart('line_canvas', data_set_daily, daily_labels, '')
 	line_chart('line_canvas1', month_data_set, month_labels, '')
-	line_chart('line_canvas2', all_data_set, ["3m", "6m", "9m", "12m", "15m", "18m"], '')
+	line_chart('line_canvas2', all_data_set, year_labels, '')
 }, false);
 
 </script>
-
+</div>
 
 {% endblock content%}
