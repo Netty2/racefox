@@ -64,6 +64,19 @@ body {
 								{% endfor %}
 							</ul>
 						</div>
+						<div class="coach">
+							<div class="coach_img"><img src="{{ url_for('static', filename='goal.png') }}" alt=""></div>
+							<h5 class="coach-title">Selected cluster</h5>
+							<ul>
+								{% for cluster in user_data.clusters%}
+									{% if loop.index == 1 %}
+										<li id="selected-cluster">Selected cluster : 99%</li>
+									{% else %}
+										<li class="clusters">{{cluster}}</li>
+									{% endif %}
+								{% endfor %}
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
