@@ -7,6 +7,53 @@ from flask_mail import Message
 from app.data_generator_clone import get_all_historical_values
 from app.resources.data_generator import get_csv
 
+mock_day_data = {
+    "data": [
+      {
+        "date" : "2018-11-25",
+        "sleep" : 7.5,
+        "sleep_quality" : 8,
+        "steps": 5600,
+        "stairs": 12,
+        "distance": 4.4,
+        "calories": 2000,
+        "fat": 50,
+        "carbs": 70,
+        "protein": 100,
+        "sleep_goal" : 8,
+        "sleep_quality_goal" : 9,
+        "steps_goal": 8000,
+        "stairs_goal": 15,
+        "distance_goal": 6.0,
+        "calories_goal": 2300,
+        "fat_goal": 230,
+        "carbs_goal": 250,
+        "protein_goal": 240
+      },
+      {
+      "date" : "2018-11-24",
+      "sleep" : 7.5,
+      "sleep_quality" : 8,
+      "steps": 5600,
+      "stairs": 12,
+      "distance": 4.4,
+      "calories": 2000,
+      "fat": 250,
+      "carbs": 200,
+      "protein": 200,
+      "sleep_goal" : 8,
+      "sleep_quality_goal" : 9,
+      "steps_goal": 8000,
+      "stairs_goal": 15,
+      "distance_goal": 6.0,
+      "calories_goal": 2300,
+      "fat_goal": 230,
+      "carbs_goal": 250,
+      "protein_goal": 240
+    }
+    ],
+}
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -60,7 +107,7 @@ def load_sleep():
 		return render_template('sleephistorical.html', title='Sleep - Historical', data={"sleep_time": sleep_time}
 		) #TODO: Lägg till data för historical
 	else:
-		return render_template('sleep.html', title = 'Sleep - Daily', user_data = mock_sleep_data)
+		return render_template('sleep.html', title = 'Sleep - Daily', user_data = mock_day_data["data"])
 
 @login_required
 @app.route("/activity")
@@ -128,7 +175,7 @@ def load_activity():
 			data={"avg_pulse": avg_pulse, "max_pulse": max_pulse, "workout_calories": workout_calories, "running_km": running_km}
 		)
 	else:
-		return render_template('activity.html', title = 'Activity and Training - Daily', user_data = mock_activity_data)
+		return render_template('activity.html', title = 'Activity and Training - Daily', user_data = mock_day_data["data"])
 
 
 @login_required
@@ -215,7 +262,7 @@ def load_food():
 				"greens": greens}
 		)
 	else:
-		return render_template('food.html', title = 'Food & Nutrition - Daily', user_data = mock_food_data)
+		return render_template('food.html', title = 'Food & Nutrition - Daily', user_data = mock_day_data["data"])
 
 
 @app.route("/register", methods=['GET', 'POST']) # Kan hantera både GET och POST requests. POST requests sker när man skickar in inloggningsdetaljer
