@@ -16,11 +16,21 @@ body {
 			<div class="col-lg-6">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title">Today's Goal</h5>
-						<h6 class="card-subtitle mb-4 text-muted">View today's progress. Follow the tips to reach your maximum potential.</h6>
+						
+						<!-- Uncomment if we need an overarching header. Otherwise it looks better without it
+						<h5 class="card-title">WELCOME BACK!</h5>
+						<h6 class="card-subtitle mb-4 text-muted">Lets reach your maximum potential!</h6>-->
 
-						<div id="today_chart" class="chart_progress"></div>
-						{% if user_data.daily_question %}
+						<div class="coach">
+							<div class="coach_img"><img src="{{ url_for('static', filename='speed-icon.svg') }}" alt=""></div>
+							<h5 class="coach-title">Daily Progress</h5>
+							<p id="question">Follow the tips from the AI-coach to increase your score.</p>
+
+							<div id="today_chart" class="chart_progress"></div>
+							{% if user_data.daily_question %}
+						</div>
+
+
 						<div class="coach" id="daily_assessment">
 							<div class="coach_img"><img src="{{ url_for('static', filename='heart-rate-icon.svg')}}" alt="question"></div>
 							<h5 class="coach-title">Daily Assessment</h5>
@@ -64,6 +74,7 @@ body {
 								{% endfor %}
 							</ul>
 						</div>
+
 						<div class="coach">
 							<div class="coach_img"><img src="{{ url_for('static', filename='goal.png') }}" alt=""></div>
 							<h5 class="coach-title">Selected cluster</h5>
@@ -121,6 +132,7 @@ $("#wellnessform").submit(function(e) {
     border-radius: 5px;
     text-transform: uppercase;
     text-align: center;
+    background-color: #EF8132;
 }</style>
 {% endif %}
 
