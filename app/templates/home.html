@@ -8,7 +8,7 @@
 			<div class="col-lg-6">
 				<div class="card">
 					<div class="card-body">
-						<h4>Overview</h4>
+						<h4>My Overview</h4>
 
 						<!-- Uncomment if we need an overarching header. Otherwise it looks better without it
 						<h5 class="card-title">WELCOME BACK!</h5>
@@ -122,14 +122,22 @@ $("#wellnessform").submit(function(e) {
 <div class="login-bg"></div>
 <div class="loginform-wrapper">
 	<div class="loginform-content">
+		<div class="coach" style="background-color:white;margin-bottom:50px;">
+			<div class="coach_img"><img src="{{url_for('static', filename='coach-icon.svg')}}" alt=""></div>
+			<h5 class="coach-title">Coach</h5>
+			<p>Welcome to racefox!</p>
+			<p style="text-align:justify;">With racefox, you combine your data streams to get new personalized insights. We help you achieve better health, the holistic way.</p>
+		</div>
 		<div id="login-button" class="text-center">
   			<a href="{{ url_for('login') }}"><button type="button" class="btn btn-primary btn-lg"><span>Log in</span></button></a>
+				<a href="{{ url_for('register') }}"><button type="button" class="btn btn-primary btn-lg"><span>Register</span></button></a>
 		</div>
 	</div>
 </div>
 <style>#login-button .btn {
-    padding: 26px 60px;
-    font-size: 1.65rem;
+		width: 45%;
+		max-width: 250px;
+    font-size: 1.4rem;
     line-height: 1.5;
     border-radius: 5px;
     text-transform: uppercase;

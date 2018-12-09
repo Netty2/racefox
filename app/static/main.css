@@ -187,12 +187,22 @@ body{
 			background-color: #fff;
 		}
 
+    .coach-title{
+      margin-top: 5px;
+      text-align: center;
+    }
+
 		.coach {
-			margin: 45px 25px 25px;
-			padding: 10px 20px;
+			margin-top: 45px;
+      margin-bottom: 20px;
+			padding: 15px 15px;
 			box-shadow: 0px 0px 10px 0px rgba(51, 51, 51, 0.16);
 			border-radius: 12px;
 		}
+
+    .coach p{
+      text-align: center;
+    }
 
 		.coach_img img {
 			width: 26px;

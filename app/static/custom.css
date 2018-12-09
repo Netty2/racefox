@@ -131,8 +131,9 @@
   color: #fff;
   background-color: #ef7e2d;
   border-color: #ef7e2d;
+  box-shadow: 0 0 0 0.2rem rgba(239, 126, 45, 0.5);
 }
 
-.btn-outline-info.focus, .btn-outline-info:focus {
+.btn-outline-info.focus, .btn-outline-info:focus, .btn-outline-info:focus, .btn-outline-info:not(:disabled):not(.disabled):active:focus{
     box-shadow: 0 0 0 0.2rem rgba(239, 126, 45, 0.5);
 }
