@@ -14,6 +14,8 @@
                         d3.csv(url, callback).
 
  -->
+ <div id="parallellContainer">
+ </div>
 <style>
 
 svg {
@@ -48,7 +50,11 @@ svg {
   text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
   cursor: move;
 }
-
+#parallellContainer {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+}
 </style>
 
 <script src="//d3js.org/d3.v3.min.js"></script>
@@ -67,7 +73,7 @@ var line = d3.svg.line(),
     background,
     foreground;
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#parallellContainer").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
