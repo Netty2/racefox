@@ -154,6 +154,7 @@ a.article-title:hover {
 }
 
 #selected-cluster {
+    color: white;
     border: 2px solid #ef7e2d;
     border-radius: 4px;
     width: 50%;
