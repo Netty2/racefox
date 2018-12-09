@@ -5,6 +5,7 @@ from app.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 from app.data_generator_clone import get_all_historical_values
+from app.recourses.data_generator import get_csv
 
 @app.route("/")
 @app.route("/home")
@@ -325,6 +326,5 @@ def report_wellness():
 
 @app.route("/nerd-data")
 def nerd_data():
-	f = open("/home/ericto/Desktop/RaceFox/app/data/burger_user_100d.csv",'r')
-	data = "".join([line for line in f])
+	data = get_csv("burger_user_100d")
 	return render_template("parallel_coordinates.html", title="Nerd data", csv_content=data)
