@@ -101,19 +101,24 @@ def load_activity():
 		running_km_data_points = get_all_historical_values()[11]
 
 		avg_pulse = {
+			"week": avg_pulse_data_points[:7],
 			"month": avg_pulse_data_points[:30],
+			"year": avg_pulse_data_points,
 		}
-
 		max_pulse = {
+			"week": max_pulse_data_points[:7],
 			"month": max_pulse_data_points[:30],
+			"year": max_pulse_data_points,
 		}
-
 		workout_calories = {
+			"week": workout_calories_data_points[:7],
 			"month": workout_calories_data_points[:30],
+			"year": workout_calories_data_points,
 		}
-
 		running_km = {
+			"week": running_km_data_points[:7],
 			"month": running_km_data_points[:30],
+			"year": running_km_data_points,
 		}
 
 		return render_template(
@@ -168,22 +173,34 @@ def load_food():
 		greens_data_points = get_all_historical_values()[3]
 
 		calories = {
+			"week": calories_data_points[:7],
 			"month": calories_data_points[:30],
+			"year": calories_data_points,
 		}
 		carbohydrates = {
+			"week": carbohydrates_data_points[:7],
 			"month": carbohydrates_data_points[:30],
-		}
+			"year": carbohydrates_data_points,
+ 		}
 		protein = {
+			"week": protein_data_points[:7],
 			"month": protein_data_points[:30],
+			"year": protein_data_points,
 		}
 		fat = {
+			"week": fat_data_points[:7],
 			"month": fat_data_points[:30],
-		}
+			"year": fat_data_points,
+ 		}
 		sugar = {
+			"week": sugar_data_points[:7],
 			"month": sugar_data_points[:30],
-		}
+			"year": sugar_data_points,
+ 		}
 		greens = {
+			"week": greens_data_points[:7],
 			"month": greens_data_points[:30],
+			"year": greens_data_points,
 		}
 		return render_template(
 			'foodhistorical.html',

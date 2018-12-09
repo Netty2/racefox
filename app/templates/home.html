@@ -107,9 +107,21 @@ $("#wellnessform").submit(function(e) {
 <script src="{{ url_for('static', filename='utils.js') }}"></script>
 <script src="{{ url_for('static', filename='main.js') }}"></script>
 {% else %}
-<div id="login-button" class="col-md-4 text-center">
-  <a href="{{ url_for('login') }}"><button type="button" class="btn btn-primary btn-lg"><span>Log in</span></button></a>
+<div class="loginform-wrapper">
+	<div class="loginform-content">
+		<div id="login-button" class="text-center">
+  			<a href="{{ url_for('login') }}"><button type="button" class="btn btn-primary btn-lg"><span>Log in</span></button></a>
+		</div>
+	</div>
 </div>
+<style>#login-button .btn {
+    padding: 26px 60px;
+    font-size: 1.65rem;
+    line-height: 1.5;
+    border-radius: 5px;
+    text-transform: uppercase;
+    text-align: center;
+}</style>
 {% endif %}
 
 {% endblock content%}
