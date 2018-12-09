@@ -34,7 +34,7 @@ document.getElementById("historyButton").onclick = function () {
 						<div class="days">
 							{% for day in user_data %}
 							<div class="single_day">
-								<div class="day_name"><p>Today</p></div>
+								<div class="day_name"><p>{{day.day_display_name}}</p></div>
 								<div class="container">
 									<div class="row">
 										<div class="chart-wrapper col">
