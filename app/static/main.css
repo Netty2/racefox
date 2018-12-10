@@ -33,7 +33,6 @@ button:focus{
  border-color: #ffffff;
 }*/
 
-
 .content-section {
   background: #ffffff;
   padding: 10px 20px;
@@ -153,11 +152,28 @@ a.article-title:hover {
   margin-bottom: 0rem;
 }
 
+.clusters:hover {
+    border: 2px solid #ef7e2d;
+    border-radius: 4px;
+}
+
+#userInputForm {
+  background-color: #ef7e2d;
+  margin: auto;
+  display: block;
+  border: None;
+}
+#gender{
+  list-style-type: none;
+  list-style: none;
+  padding: 0;
+}
+
 body{
 		font-family: Raleway, Helvetica, sans-serif;}
 		.chart_progress {
-			max-width: 160px;
-			margin: 20px auto;
+			max-width: 70px;
+			margin: 8px auto;
 			position: relative;
 		}
 		.coach_img {
@@ -171,12 +187,22 @@ body{
 			background-color: #fff;
 		}
 
+    .coach-title{
+      margin-top: 5px;
+      text-align: center;
+    }
+
 		.coach {
-			margin: 45px 25px 25px;
-			padding: 10px 20px;
+			margin-top: 45px;
+      margin-bottom: 20px;
+			padding: 15px 15px;
 			box-shadow: 0px 0px 10px 0px rgba(51, 51, 51, 0.16);
 			border-radius: 12px;
 		}
+
+    .coach p{
+      text-align: center;
+    }
 
 		.coach_img img {
 			width: 26px;
@@ -188,6 +214,7 @@ body{
 			font-weight: 400;
 			text-transform: uppercase;
 			margin-top: -8px;
+      margin-top: 5px;
 		}
 		.day_name p {
 			margin: 0;
@@ -212,3 +239,15 @@ body{
 			top: 12px;
 			margin: 0 auto;
 		}
+
+    .parameter_number {
+      font-family: 'Graduate', cursive;
+      margin: auto;
+      text-align: center;
+      display: block;
+      font-size: 0.7rem;
+    }
+
+    .chart-wrapper {
+      margin: auto;
+    }

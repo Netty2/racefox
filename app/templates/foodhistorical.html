@@ -22,20 +22,51 @@ document.getElementById("historyButton").onclick = function () {
     };
 </script>
 
-<center>
-<h1>Food Historical</h1>
-</center>
-
-<canvas id="line_canvas"></canvas>
-<canvas id="line_canvas1"></canvas>
-<canvas id="line_canvas2"></canvas>
-<canvas id="line_canvas3"></canvas>
-<canvas id="line_canvas4"></canvas>
-<canvas id="line_canvas5"></canvas>
+<div class="pills_wrapper">
+  <center>
+  	<div class="nav_pills">
+  			<button id="show_week" class ="btn btn-outline-info">Week</button>
+  			<button id="show_month" class ="btn btn-outline-info">Month</button>
+  			<button id="show_year" class ="btn btn-outline-info">Year</button>
+  	</div>
+  </center>
+ 	<div class="nav_pill_content week">
+		<canvas id="calories_week_chart"></canvas>
+		<canvas id="carbohydrates_week_chart"></canvas>
+		<canvas id="protein_week_chart"></canvas>
+		<canvas id="fat_week_chart"></canvas>
+		<canvas id="sugar_week_chart"></canvas>
+		<canvas id="greens_week_chart"></canvas>
+	</div>
+	<div class="nav_pill_content month">
+		<canvas id="calories_month_chart"></canvas>
+		<canvas id="carbohydrates_month_chart"></canvas>
+		<canvas id="protein_month_chart"></canvas>
+		<canvas id="fat_month_chart"></canvas>
+		<canvas id="sugar_month_chart"></canvas>
+		<canvas id="greens_month_chart"></canvas>
+	</div>
+	<div class="nav_pill_content year">
+		<canvas id="calories_year_chart"></canvas>
+		<canvas id="carbohydrates_year_chart"></canvas>
+		<canvas id="protein_year_chart"></canvas>
+		<canvas id="fat_year_chart"></canvas>
+		<canvas id="sugar_year_chart"></canvas>
+		<canvas id="greens_year_chart"></canvas>
+	</div>
+</div>
 
 
 <script>
-var calories_data_set = [
+var calories_week_data_set = [
+	{
+        label: 'Calories',
+        Color: '#C0C0C0',
+        fill: false,
+        data: {{data.calories.week}}
+    }
+];
+var calories_month_data_set = [
 	{
         label: 'Calories',
         Color: '#C0C0C0',
@@ -43,8 +74,23 @@ var calories_data_set = [
         data: {{data.calories.month}}
     }
 ];
-
-var carbohydrates_data_set = [
+var calories_year_data_set = [
+	{
+        label: 'Calories',
+        Color: '#C0C0C0',
+        fill: false,
+        data: {{data.calories.year}}
+    }
+];
+var carbohydrates_week_data_set = [
+	{
+        label: 'Carbohydrates',
+        Color: '#FF0000',
+        fill: false,
+        data: {{data.carbohydrates.week}}
+    }
+];
+var carbohydrates_month_data_set = [
 	{
         label: 'Carbohydrates',
         Color: '#FF0000',
@@ -52,8 +98,23 @@ var carbohydrates_data_set = [
         data: {{data.carbohydrates.month}}
     }
 ];
-
-var protein_data_set = [
+var carbohydrates_year_data_set = [
+	{
+        label: 'Carbohydrates',
+        Color: '#FF0000',
+        fill: false,
+        data: {{data.carbohydrates.year}}
+    }
+];
+var protein_week_data_set = [
+	{
+        label: 'Protein',
+        Color: '#800000',
+        fill: false,
+        data: {{data.protein.week}}
+    }
+];
+var protein_month_data_set = [
 	{
         label: 'Protein',
         Color: '#800000',
@@ -61,8 +122,23 @@ var protein_data_set = [
         data: {{data.protein.month}}
     }
 ];
-
-var fat_data_set = [
+var protein_year_data_set = [
+	{
+        label: 'Protein',
+        Color: '#800000',
+        fill: false,
+        data: {{data.protein.year}}
+    }
+];
+var fat_week_data_set = [
+	{
+        label: 'Fat',
+        Color: '#FFFF00',
+        fill: false,
+        data: {{data.fat.week}}
+    }
+];
+var fat_month_data_set = [
 	{
         label: 'Fat',
         Color: '#FFFF00',
@@ -70,8 +146,23 @@ var fat_data_set = [
         data: {{data.fat.month}}
     }
 ];
-
-var sugar_data_set = [
+var fat_year_data_set = [
+	{
+        label: 'Fat',
+        Color: '#FFFF00',
+        fill: false,
+        data: {{data.fat.year}}
+    }
+];
+var sugar_week_data_set = [
+	{
+        label: 'Sugar',
+        Color: '#808000',
+        fill: false,
+        data: {{data.sugar.week}}
+    }
+];
+var sugar_month_data_set = [
 	{
         label: 'Sugar',
         Color: '#808000',
@@ -79,8 +170,23 @@ var sugar_data_set = [
         data: {{data.sugar.month}}
     }
 ];
-
-var greens_data_set = [
+var sugar_year_data_set = [
+	{
+        label: 'Sugar',
+        Color: '#808000',
+        fill: false,
+        data: {{data.sugar.year}}
+    }
+];
+var greens_week_data_set = [
+	{
+        label: 'Greens',
+        Color: '#00FF00',
+        fill: false,
+        data: {{data.greens.week}}
+    }
+];
+var greens_month_data_set = [
 	{
         label: 'Greens',
         Color: '#00FF00',
@@ -88,23 +194,51 @@ var greens_data_set = [
         data: {{data.greens.month}}
     }
 ];
-
-
+var greens_year_data_set = [
+	{
+        label: 'Greens',
+        Color: '#00FF00',
+        fill: false,
+        data: {{data.greens.year}}
+    }
+];
 var month_labels = [
  {% for i in range(31)[1:] %}
  "{{ i}} day",
  {% endfor %}
 ]
-
+var year_labels = [
+ {% for i in range(13)[1:] %}
+ "{{ i}} month",
+ {% endfor %}
+]
+var week_labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 document.addEventListener('DOMContentLoaded', function(){
-	line_chart('line_canvas', calories_data_set, month_labels, '')
-	line_chart('line_canvas1', carbohydrates_data_set, month_labels, '')
-	line_chart('line_canvas3', protein_data_set, month_labels, '')
-	line_chart('line_canvas3', fat_data_set, month_labels, '')
-	line_chart('line_canvas4', sugar_data_set, month_labels, '')
-	line_chart('line_canvas5', greens_data_set, month_labels, '')
+	// Calories
+	line_chart('calories_week_chart', calories_week_data_set, week_labels, '')
+	line_chart('calories_month_chart', calories_month_data_set, month_labels, '')
+	line_chart('calories_year_chart', calories_year_data_set, year_labels, '')
+	// Carbohydrates
+	line_chart('carbohydrates_week_chart', carbohydrates_week_data_set, week_labels, '')
+	line_chart('carbohydrates_month_chart', carbohydrates_month_data_set, month_labels, '')
+	line_chart('carbohydrates_year_chart', carbohydrates_year_data_set, year_labels, '')
+	// Protein
+	line_chart('protein_week_chart', protein_week_data_set, week_labels, '')
+	line_chart('protein_month_chart', protein_month_data_set, month_labels, '')
+	line_chart('protein_year_chart', protein_year_data_set, year_labels, '')
+	// Fat
+	line_chart('fat_week_chart', fat_week_data_set, week_labels, '')
+	line_chart('fat_month_chart', fat_month_data_set, month_labels, '')
+	line_chart('fat_year_chart', fat_year_data_set, year_labels, '')
+	// Sugar
+	line_chart('sugar_week_chart', sugar_week_data_set, week_labels, '')
+	line_chart('sugar_month_chart', sugar_month_data_set, month_labels, '')
+	line_chart('sugar_year_chart', sugar_year_data_set, year_labels, '')
+	// Greens
+	line_chart('greens_week_chart', greens_week_data_set, week_labels, '')
+	line_chart('greens_month_chart', greens_month_data_set, month_labels, '')
+	line_chart('greens_year_chart', greens_year_data_set, year_labels, '')
 }, false);
-
 </script>
 
 

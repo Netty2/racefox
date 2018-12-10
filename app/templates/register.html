@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
-	<div class="content-section">
+<div class="loginform-wrapper">
+<div class="loginform-content">
+	<div class="content-section login-section">
+		<div class="login-bg"></div>
 		<form method="POST" action="">
 			{{ form.hidden_tag() }}
 			<fieldset class="form-group">
@@ -50,9 +53,11 @@
 			</div>
 		</form>
 	</div>
+	</div>
+	</div>
 	<div class="border-top pt-3">
 		<small class="text-muted">
-			Already have an account? <a class="ml-2" href="{{ url_for('login') }}">Sign in</a>
+			Already have an account? <a style="color:#ef7e2d;" class="ml-2" href="{{ url_for('login') }}">Sign in</a>
 		</small>
 	</div>
 {% endblock content%}

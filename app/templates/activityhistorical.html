@@ -22,68 +22,132 @@ document.getElementById("historyButton").onclick = function () {
     };
 </script>
 
-
-<center>
-<h1>Activity Historical</h1>
-</center>
-
-<canvas id="line_canvas"></canvas>
-<canvas id="line_canvas1"></canvas>
-<canvas id="line_canvas2"></canvas>
-<canvas id="line_canvas3"></canvas>
-
+<div class="pills_wrapper">
+  <center>
+  	<div class="nav_pills">
+  			<button id="show_week" class ="btn btn-outline-info">Week</button>
+  			<button id="show_month" class ="btn btn-outline-info">Month</button>
+  			<button id="show_year" class ="btn btn-outline-info">Year</button>
+  	</div>
+  </center>
+ 	<div class="nav_pill_content week">
+        <canvas id="steps_week_chart"></canvas>
+		<canvas id="stairs_week_chart"></canvas>
+		<canvas id="distance_week_chart"></canvas>
+	</div>
+	<div class="nav_pill_content month">
+		<canvas id="steps_month_chart"></canvas>
+        <canvas id="stairs_month_chart"></canvas>
+		<canvas id="distance_month_chart"></canvas>
+	</div>
+ 	<div class="nav_pill_content year">
+        <canvas id="steps_year_chart"></canvas>
+		<canvas id="stairs_year_chart"></canvas>
+		<canvas id="distance_year_chart"></canvas>
+	</div>
+</div>
 
 <script>
-var avg_pulse_data_set = [
-	{
-        label: 'Average Pulse',
+
+var stairs_week_data_set = [
+    {
+        label: 'Stairs',
         Color: '#008000',
         fill: false,
-        data: {{data.avg_pulse.month}}
+        data: {{data.stairs.week}}
+    }
+];
+var stairs_month_data_set = [
+    {
+        label: 'Stairs',
+        Color: '#008000',
+        fill: false,
+        data: {{data.stairs.month}}
+    }
+];
+var stairs_year_data_set = [
+    {
+        label: 'Stairs',
+        Color: '#008000',
+        fill: false,
+        data: {{data.stairs.year}}
     }
 ];
 
-var max_pulse_data_set = [
+var steps_week_data_set = [
 	{
-        label: 'Max Pulse',
+        label: 'Steps',
         Color: '#00FFFF',
         fill: false,
-        data: {{data.max_pulse.month}}
+        data: {{data.steps.week}}
     }
 ];
-
-var workout_calories_data_set = [
+var steps_month_data_set = [
 	{
-        label: 'Workout Calories',
+        label: 'Steps',
+        Color: '#00FFFF',
+        fill: false,
+        data: {{data.steps.month}}
+    }
+];
+var steps_year_data_set = [
+	{
+        label: 'Steps',
+        Color: '#00FFFF',
+        fill: false,
+        data: {{data.steps.year}}
+    }
+];
+var distance_week_data_set = [
+	{
+        label: 'Distance',
         Color: '#008080',
         fill: false,
-        data: {{data.workout_calories.month}}
+        data: {{data.distance.week}}
     }
 ];
-
-var running_km_data_set = [
+var distance_month_data_set = [
 	{
-        label: 'Running Km',
-        Color: '#0000FF',
+        label: 'Distance',
+        Color: '#008080',
         fill: false,
-        data: {{data.running_km.month}}
+        data: {{data.distance.month}}
     }
 ];
-
+var distance_year_data_set = [
+	{
+        label: 'Distance',
+        Color: '#008080',
+        fill: false,
+        data: {{data.distance.year}}
+    }
+];
 
 var month_labels = [
  {% for i in range(31)[1:] %}
  "{{ i}} day",
  {% endfor %}
 ]
-
+var year_labels = [
+ {% for i in range(13)[1:] %}
+ "{{ i}} month",
+ {% endfor %}
+]
+var week_labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 document.addEventListener('DOMContentLoaded', function(){
-	line_chart('line_canvas', avg_pulse_data_set, month_labels, '')
-	line_chart('line_canvas1', max_pulse_data_set, month_labels, '')
-	line_chart('line_canvas3', workout_calories_data_set, month_labels, '')
-	line_chart('line_canvas3', running_km_data_set, month_labels, '')
+    // Max Pulse Charts
+    line_chart('steps_week_chart', steps_week_data_set, week_labels, '')
+    line_chart('steps_month_chart', steps_month_data_set, month_labels, '')
+    line_chart('steps_year_chart', steps_year_data_set, year_labels, '')
+	// Stairs Charts
+	line_chart('stairs_week_chart', stairs_week_data_set, week_labels, '')
+	line_chart('stairs_month_chart', stairs_month_data_set, month_labels, '')
+	line_chart('stairs_year_chart', stairs_year_data_set, year_labels, '')
+	// Distance Pulse Charts
+	line_chart('distance_week_chart', distance_week_data_set, week_labels, '')
+	line_chart('distance_month_chart', distance_month_data_set, month_labels, '')
+	line_chart('distance_year_chart', distance_year_data_set, year_labels, '')
 }, false);
-
 </script>
 
 

@@ -34,20 +34,26 @@ document.getElementById("historyButton").onclick = function () {
 						<div class="days">
 							{% for day in user_data %}
 							<div class="single_day">
-								<div class="day_name"><p>Today</p></div>
+								<div class="day_name"><p>{{day.date}}</p></div>
 								<div class="container">
 									<div class="row">
 										<div class="chart-wrapper col">
-											<div class="steps_chart chart_progress" data={{day.steps}}></div>
-											<h2 class="chart_title">Steps</h2>
+                      <h2 class="chart_title">Steps</h2>
+											<div class="steps_chart chart_progress" data={{day.steps/day.steps_goal}}></div>
+                      <span class="parameter_number">{{day.steps}}</span>
+                      <span class="parameter_number">goal: {{day.steps_goal}}</span>
 										</div>
 										<div class="chart-wrapper col">
-											<div class="chart_progress stairs_chart" data={{day.stairs}}></div>
-											<h2 class="chart_title">Stairs</h2>
+                      <h2 class="chart_title">Stairs</h2>
+											<div class="chart_progress stairs_chart" data={{day.stairs/day.stairs_goal}}></div>
+                      <span class="parameter_number">{{day.stairs}}</span>
+                      <span class="parameter_number">goal: {{day.stairs_goal}}</span>
 										</div>
 										<div class="chart-wrapper col">
-											<div class="chart_progress distance_chart" data={{day.distance}}></div>
-											<h2 class="chart_title">Distance</h2>
+                      <h2 class="chart_title">Distance</h2>
+											<div class="chart_progress distance_chart" data={{day.distance/day.distance_goal}}></div>
+                      <span class="parameter_number">{{day.distance}}km</span>
+                      <span class="parameter_number">goal: {{day.distance_goal}}km</span>
 										</div>
 									</div>
 								</div>

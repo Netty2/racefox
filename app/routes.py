@@ -5,6 +5,54 @@ from app.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 from app.data_generator_clone import get_all_historical_values
+from app.resources.data_generator import get_csv
+
+mock_day_data = {
+    "data": [
+      {
+        "date" : "2018-11-25",
+        "sleep" : 7.5,
+        "sleep_quality" : 8,
+        "steps": 5600,
+        "stairs": 12,
+        "distance": 4.4,
+        "calories": 2000,
+        "fat": 50,
+        "carbs": 70,
+        "protein": 100,
+        "sleep_goal" : 8,
+        "sleep_quality_goal" : 9,
+        "steps_goal": 8000,
+        "stairs_goal": 15,
+        "distance_goal": 6.0,
+        "calories_goal": 2300,
+        "fat_goal": 230,
+        "carbs_goal": 250,
+        "protein_goal": 240
+      },
+      {
+      "date" : "2018-11-24",
+      "sleep" : 7.5,
+      "sleep_quality" : 8,
+      "steps": 5600,
+      "stairs": 12,
+      "distance": 4.4,
+      "calories": 2000,
+      "fat": 250,
+      "carbs": 200,
+      "protein": 200,
+      "sleep_goal" : 8,
+      "sleep_quality_goal" : 9,
+      "steps_goal": 8000,
+      "stairs_goal": 15,
+      "distance_goal": 6.0,
+      "calories_goal": 2300,
+      "fat_goal": 230,
+      "carbs_goal": 250,
+      "protein_goal": 240
+    }
+    ],
+}
 
 @app.route("/")
 @app.route("/home")
@@ -12,8 +60,9 @@ def home():
 	# TODO: get user data containing notifications and AI-generated tips
 	mock_home_data = {
 		"coach_messages": ["eat a snack", "Do yoga", "Take a 10 mile walk"],
-		"daily_question": True
-	}
+		"daily_question": True,
+		"clusters": ["Cluster 1 : 78%", "Cluster 2 : 59%", "Cluster 3 : 43%", "Cluster 4 : 19%", "Cluster 4 : 9%"]
+ 	}
 	# TODO: get the daily_question attribute from the actual user, so we know wether to show it or not for that day.
 	return render_template('home.html', title='Home', user_data = mock_home_data)
 
@@ -58,7 +107,7 @@ def load_sleep():
 		return render_template('sleephistorical.html', title='Sleep - Historical', data={"sleep_time": sleep_time}
 		) #TODO: Lägg till data för historical
 	else:
-		return render_template('sleep.html', title = 'Sleep - Daily', user_data = mock_sleep_data)
+		return render_template('sleep.html', title = 'Sleep - Daily', user_data = mock_day_data["data"])
 
 @login_required
 @app.route("/activity")
@@ -94,34 +143,33 @@ def load_activity():
 		}
 	]
 	if request.args.get('view') == 'historical':
-		avg_pulse_data_points = get_all_historical_values()[13]
-		max_pulse_data_points = get_all_historical_values()[12]
-		workout_calories_data_points = get_all_historical_values()[15]
-		running_km_data_points = get_all_historical_values()[11]
+		stairs_data_points = get_all_historical_values()[9]
+		steps_data_points = get_all_historical_values()[8]
+		distance_data_points = get_all_historical_values()[15]
 
-		avg_pulse = {
-			"month": avg_pulse_data_points[:30],
+		stairs = {
+			"week": stairs_data_points[:7],
+			"month": stairs_data_points[:30],
+			"year": stairs_data_points,
 		}
-
-		max_pulse = {
-			"month": max_pulse_data_points[:30],
+		steps = {
+			"week": steps_data_points[:7],
+			"month": steps_data_points[:30],
+			"year": steps_data_points,
 		}
-
-		workout_calories = {
-			"month": workout_calories_data_points[:30],
-		}
-
-		running_km = {
-			"month": running_km_data_points[:30],
+		distance = {
+			"week": distance_data_points[:7],
+			"month": distance_data_points[:30],
+			"year": distance_data_points,
 		}
 
 		return render_template(
 			'activityhistorical.html',
 			title='Activity & Training - Historical',
-			data={"avg_pulse": avg_pulse, "max_pulse": max_pulse, "workout_calories": workout_calories, "running_km": running_km}
+			data={"stairs": stairs, "steps": steps, "distance": distance}
 		)
 	else:
-		return render_template('activity.html', title = 'Activity and Training - Daily', user_data = mock_activity_data)
+		return render_template('activity.html', title = 'Activity and Training - Daily', user_data = mock_day_data["data"])
 
 
 @login_required
@@ -167,22 +215,34 @@ def load_food():
 		greens_data_points = get_all_historical_values()[3]
 
 		calories = {
+			"week": calories_data_points[:7],
 			"month": calories_data_points[:30],
+			"year": calories_data_points,
 		}
 		carbohydrates = {
+			"week": carbohydrates_data_points[:7],
 			"month": carbohydrates_data_points[:30],
-		}
+			"year": carbohydrates_data_points,
+ 		}
 		protein = {
+			"week": protein_data_points[:7],
 			"month": protein_data_points[:30],
+			"year": protein_data_points,
 		}
 		fat = {
+			"week": fat_data_points[:7],
 			"month": fat_data_points[:30],
-		}
+			"year": fat_data_points,
+ 		}
 		sugar = {
+			"week": sugar_data_points[:7],
 			"month": sugar_data_points[:30],
-		}
+			"year": sugar_data_points,
+ 		}
 		greens = {
+			"week": greens_data_points[:7],
 			"month": greens_data_points[:30],
+			"year": greens_data_points,
 		}
 		return render_template(
 			'foodhistorical.html',
@@ -196,7 +256,7 @@ def load_food():
 				"greens": greens}
 		)
 	else:
-		return render_template('food.html', title = 'Food & Nutrition - Daily', user_data = mock_food_data)
+		return render_template('food.html', title = 'Food & Nutrition - Daily', user_data = mock_day_data["data"])
 
 
 @app.route("/register", methods=['GET', 'POST']) # Kan hantera både GET och POST requests. POST requests sker när man skickar in inloggningsdetaljer
@@ -257,7 +317,6 @@ def logout():
 def account():
 	form = UpdateAccountForm()
 	if form.validate_on_submit():
-		print(current_user)
 		if bcrypt.check_password_hash(current_user.password, form.old_password.data):
 			new_hashed_password = bcrypt.generate_password_hash(form.new_password.data).decode('utf-8')
 			current_user.password = new_hashed_password
@@ -325,6 +384,5 @@ def report_wellness():
 
 @app.route("/nerd-data")
 def nerd_data():
-	f = open("/home/ericto/Desktop/RaceFox/app/data/burger_user_100d.csv",'r')
-	data = "".join([line for line in f])
+	data = get_csv(get_all_historical_values())
 	return render_template("parallel_coordinates.html", title="Nerd data", csv_content=data)

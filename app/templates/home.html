@@ -1,14 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<style type="text/css">
-body {
-	background: url(https://cms.racefox.se//storage/uploads/2018/03/28/5abb70adb63bdnew-header-comp-01.jpg);
-	background-size: auto 100%;
-}
-
-</style>
-
 {% if current_user.is_authenticated %}
 <div class="container">
 		<div class="row">
@@ -16,11 +8,22 @@ body {
 			<div class="col-lg-6">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title">Today's Goal</h5>
-						<h6 class="card-subtitle mb-4 text-muted">View today's progress. Follow the tips to reach your maximum potential.</h6>
+						<h4>My Overview</h4>
 
-						<div id="today_chart" class="chart_progress"></div>
-						{% if user_data.daily_question %}
+						<!-- Uncomment if we need an overarching header. Otherwise it looks better without it
+						<h5 class="card-title">WELCOME BACK!</h5>
+						<h6 class="card-subtitle mb-4 text-muted">Lets reach your maximum potential!</h6>-->
+
+						<div class="coach">
+							<div class="coach_img"><img src="{{ url_for('static', filename='speed-icon.svg') }}" alt=""></div>
+							<h5 class="coach-title">Daily Progress</h5>
+							<p>Follow the tips from the AI-coach to increase your score.</p>
+
+							<div id="today_chart" class="chart_progress"></div>
+							{% if user_data.daily_question %}
+						</div>
+
+
 						<div class="coach" id="daily_assessment">
 							<div class="coach_img"><img src="{{ url_for('static', filename='heart-rate-icon.svg')}}" alt="question"></div>
 							<h5 class="coach-title">Daily Assessment</h5>
@@ -64,6 +67,28 @@ body {
 								{% endfor %}
 							</ul>
 						</div>
+
+						<div class="coach">
+							<div class="coach_img"><img src="{{ url_for('static', filename='goal.png') }}" alt=""></div>
+							<h5 class="coach-title">Selected cluster</h5>
+							<p>Choose the cluster that matches your goals</p>
+							<ul style="list-style-type:none;padding: 0px;">
+								{% for cluster in user_data.clusters%}
+									{% if loop.index == 1 %}
+										<li style="background-color:#ef7e2d;border-radius:4px;color:white;">Cluster 1: 99%</li>
+									{% else %}
+										<li class="clusters">{{cluster}}</li>
+									{% endif %}
+								{% endfor %}
+							</ul>
+						</div>
+						<div class="coach">
+							<div class="coach_img"><img src="https://cms.racefox.se/storage/racefox/RUN/icons/fast-results-icon.svg" alt=""></div>
+							<h5 class="coach-title">Explore Data</h5>
+							<p>Do you love data as much as we?</p>
+							<p>Try our new visualization tool to see how your daily holisitic profile has changed over time.</p>
+							<p><a href={{url_for('nerd_data')}}>Take me there!</a></p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -82,7 +107,7 @@ $("#wellnessform").submit(function(e) {
            data: form.serialize(), // serializes the form's elements.
            success: function(data)
            {
-               $("#wellnessform").hide();
+							 $("#wellnessform").hide();
 							 $("#question").hide();
 							 $("#daily_assessment").append( "<p>Done!</p>" );
            }
@@ -94,9 +119,32 @@ $("#wellnessform").submit(function(e) {
 <script src="{{ url_for('static', filename='utils.js') }}"></script>
 <script src="{{ url_for('static', filename='main.js') }}"></script>
 {% else %}
-<div id="login-button" class="col-md-4 text-center">
-  <a href="{{ url_for('login') }}"><button type="button" class="btn btn-primary btn-lg"><span>Log in</span></button></a>
+<div class="login-bg"></div>
+<div class="loginform-wrapper">
+	<div class="loginform-content">
+		<div class="coach" style="background-color:white;margin-bottom:50px;">
+			<div class="coach_img"><img src="{{url_for('static', filename='coach-icon.svg')}}" alt=""></div>
+			<h5 class="coach-title">Coach</h5>
+			<p>Welcome to racefox!</p>
+			<p style="text-align:justify;">With racefox, you combine your data streams to get new personalized insights. We help you achieve better health, the holistic way.</p>
+		</div>
+		<div id="login-button" class="text-center">
+  			<a href="{{ url_for('login') }}"><button type="button" class="btn btn-primary btn-lg"><span>Log in</span></button></a>
+				<a href="{{ url_for('register') }}"><button type="button" class="btn btn-primary btn-lg"><span>Register</span></button></a>
+		</div>
+	</div>
 </div>
+<style>#login-button .btn {
+		width: 45%;
+		max-width: 250px;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    border-radius: 5px;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: #EF8132;
+		border: 0;
+}</style>
 {% endif %}
 
 {% endblock content%}

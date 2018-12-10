@@ -1,10 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="content-section">
-  <div class="media">
-    <div class="media-body">
-      <p class="text-secondary">Logged in as {{ current_user.email }}</p>
-    </div>
+<div class="loginform-wrapper">
+  <div class="loginform-content">
+  	<div class="content-section login-section">
+    		<div class="login-bg"></div>
+          <div class="media">
+      <div class="media-body">
+        <p class="text-secondary">Logged in as {{ current_user.email }}</p>
+      </div>
   </div>
 	<form method="POST" action="">
 		{{ form.hidden_tag() }}
