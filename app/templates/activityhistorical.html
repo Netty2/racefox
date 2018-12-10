@@ -128,11 +128,22 @@ var month_labels = [
  "{{ i}} day",
  {% endfor %}
 ]
-var year_labels = [
+var year_labels = ["January",
+"", "",
+"April",
+"", "",
+"July",
+"", "",
+"October",
+"",
+"December"
+]
+
+/*var year_labels = [
  {% for i in range(13)[1:] %}
  "{{ i}} month",
  {% endfor %}
-]
+]*/
 var week_labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 document.addEventListener('DOMContentLoaded', function(){
     // Max Pulse Charts

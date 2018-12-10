@@ -61,11 +61,24 @@ var month_labels = [
  "{{ i}} day",
  {% endfor %}
 ]
-var year_labels = [
+
+var year_labels = ["January",
+"", "",
+"April",
+"", "",
+"July",
+"", "",
+"October",
+"",
+"December"
+]
+
+/*var year_labels = [
  {% for i in range(13)[1:] %}
  "{{ i}} month",
  {% endfor %}
-]
+]*/
+
 var all_data_set = [{
         label: 'Sleep Time',
         Color: '#EF8132',
