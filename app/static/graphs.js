@@ -15,7 +15,6 @@ function createSleepGraphs(){
   for (var i = 0; i < graphs.length; i++){
     var graph = createProgressGraph(graphs[i]);
   }
-
 }
 
 function createFoodGraphs(){
@@ -65,7 +64,7 @@ function createProgressGraph(reference){
   else if (value < 0.66){
     color = window.chartColors.orange;
   }
-  else if (value <= 1){
+  else if (value <= 1.2){
     color = '#00b359';
   }
   else {
