@@ -12,6 +12,8 @@ from mpl_toolkits.mplot3d import Axes3D
 import argparse
 import math
 import time
+import json
+from datetime import datetime, timedelta
 
 
 def get_value(average, happiness):
@@ -150,6 +152,45 @@ def get_all_historical_values(progression='linear', time=100):
 
     return [get_historical_values(ideal[i],start[i], progression, time) for i in range(len(start))]
 
+def get_all_historical_values_json(progression='linear', time=100):
+    # return len(get_all_historical_values(progression=progression, time=time))
+
+    history =  get_all_historical_values(progression=progression, time=time)
+    data = []
+    for day, _ in enumerate(history[0]):
+        item = {}
+        item["date"] = (datetime.now() - timedelta(days=(len(history[0])-2-day))).strftime('%Y-%m-%d')
+        item["calories"] = history[0][day]
+        item["fat"] = history[1][day]
+        item["sugar"] = history[2][day]
+        item["greens"] = history[3][day]
+        item["protein"] = history[4][day]
+        item["carbs"] = history[5][day]
+        item["sleep"] = history[6][day]
+        item["sleep_quality"] = history[7][day]
+        item["steps"] = history[8][day]
+        item["stairs"] = history[9][day]
+        item["distance"] = history[10][day]
+        item["running_km"] = history[11][day]
+        item["max_pulse"] = history[12][day]
+        item["average_pulse"] = history[13][day]
+        item["training_time"] = history[14][day]
+        item["workout_calories"] = history[15][day]
+        item["sleep_goal"] = ideal_sleep_time
+        item["sleep_quality_goal"] = ideal_movement_index
+        item["steps_goal"] = ideal_number_of_steps
+        item["distance_goal"] = ideal_distance
+        item["calories_goal"] = ideal_calories
+        item["fat_goal"] = ideal_fat
+        item["carbs_goal"] = ideal_carbohydrates
+        item["protein_goal"] = ideal_protein
+        data.append(item)
+    data.reverse()
+    return json.dumps({"data":data})
+
+
+
+
 
 def get_manhattan(values):
     distance = [0 for _ in values]
@@ -287,7 +328,9 @@ ideal_training = [ideal_number_of_steps, ideal_stairs, ideal_distance ,ideal_run
 ideal = ideal_food + ideal_sleep + ideal_training
 
 
-save_as_csv(get_all_historical_values(), "burger_user_100d")
+# save_as_csv(get_all_historical_values(), "burger_user_100d")
+
+print(get_all_historical_values_json())
 
 # parser = argparse.ArgumentParser(description='Mock some data')
 
