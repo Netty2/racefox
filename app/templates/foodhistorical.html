@@ -31,61 +31,28 @@ document.getElementById("historyButton").onclick = function () {
   	</div>
   </center>
  	<div class="nav_pill_content week">
-		<canvas id="calories_week_chart"></canvas>
 		<canvas id="carbohydrates_week_chart"></canvas>
-		<canvas id="protein_week_chart"></canvas>
 		<canvas id="fat_week_chart"></canvas>
-		<canvas id="sugar_week_chart"></canvas>
-		<canvas id="greens_week_chart"></canvas>
+        <canvas id="protein_week_chart"></canvas>
 	</div>
 	<div class="nav_pill_content month">
-		<canvas id="calories_month_chart"></canvas>
 		<canvas id="carbohydrates_month_chart"></canvas>
-		<canvas id="protein_month_chart"></canvas>
 		<canvas id="fat_month_chart"></canvas>
-		<canvas id="sugar_month_chart"></canvas>
-		<canvas id="greens_month_chart"></canvas>
+        <canvas id="protein_month_chart"></canvas>
 	</div>
 	<div class="nav_pill_content year">
-		<canvas id="calories_year_chart"></canvas>
 		<canvas id="carbohydrates_year_chart"></canvas>
-		<canvas id="protein_year_chart"></canvas>
 		<canvas id="fat_year_chart"></canvas>
-		<canvas id="sugar_year_chart"></canvas>
-		<canvas id="greens_year_chart"></canvas>
+        <canvas id="protein_year_chart"></canvas>
 	</div>
 </div>
 
 
 <script>
-var calories_week_data_set = [
-	{
-        label: 'Calories',
-        Color: '#C0C0C0',
-        fill: false,
-        data: {{data.calories.week}}
-    }
-];
-var calories_month_data_set = [
-	{
-        label: 'Calories',
-        Color: '#C0C0C0',
-        fill: false,
-        data: {{data.calories.month}}
-    }
-];
-var calories_year_data_set = [
-	{
-        label: 'Calories',
-        Color: '#C0C0C0',
-        fill: false,
-        data: {{data.calories.year}}
-    }
-];
 var carbohydrates_week_data_set = [
 	{
         label: 'Carbohydrates',
-        Color: '#FF0000',
+        Color: '#EF8132',
         fill: false,
         data: {{data.carbohydrates.week}}
     }
@@ -93,7 +60,7 @@ var carbohydrates_week_data_set = [
 var carbohydrates_month_data_set = [
 	{
         label: 'Carbohydrates',
-        Color: '#FF0000',
+        Color: '#EF8132',
         fill: false,
         data: {{data.carbohydrates.month}}
     }
@@ -101,7 +68,7 @@ var carbohydrates_month_data_set = [
 var carbohydrates_year_data_set = [
 	{
         label: 'Carbohydrates',
-        Color: '#FF0000',
+        Color: '#EF8132',
         fill: false,
         data: {{data.carbohydrates.year}}
     }
@@ -109,7 +76,7 @@ var carbohydrates_year_data_set = [
 var protein_week_data_set = [
 	{
         label: 'Protein',
-        Color: '#800000',
+        Color: '#EF8132',
         fill: false,
         data: {{data.protein.week}}
     }
@@ -117,7 +84,7 @@ var protein_week_data_set = [
 var protein_month_data_set = [
 	{
         label: 'Protein',
-        Color: '#800000',
+        Color: '#EF8132',
         fill: false,
         data: {{data.protein.month}}
     }
@@ -125,7 +92,7 @@ var protein_month_data_set = [
 var protein_year_data_set = [
 	{
         label: 'Protein',
-        Color: '#800000',
+        Color: '#EF8132',
         fill: false,
         data: {{data.protein.year}}
     }
@@ -133,7 +100,7 @@ var protein_year_data_set = [
 var fat_week_data_set = [
 	{
         label: 'Fat',
-        Color: '#FFFF00',
+        Color: '#EF8132',
         fill: false,
         data: {{data.fat.week}}
     }
@@ -141,7 +108,7 @@ var fat_week_data_set = [
 var fat_month_data_set = [
 	{
         label: 'Fat',
-        Color: '#FFFF00',
+        Color: '#EF8132',
         fill: false,
         data: {{data.fat.month}}
     }
@@ -149,57 +116,9 @@ var fat_month_data_set = [
 var fat_year_data_set = [
 	{
         label: 'Fat',
-        Color: '#FFFF00',
+        Color: '#EF8132',
         fill: false,
         data: {{data.fat.year}}
-    }
-];
-var sugar_week_data_set = [
-	{
-        label: 'Sugar',
-        Color: '#808000',
-        fill: false,
-        data: {{data.sugar.week}}
-    }
-];
-var sugar_month_data_set = [
-	{
-        label: 'Sugar',
-        Color: '#808000',
-        fill: false,
-        data: {{data.sugar.month}}
-    }
-];
-var sugar_year_data_set = [
-	{
-        label: 'Sugar',
-        Color: '#808000',
-        fill: false,
-        data: {{data.sugar.year}}
-    }
-];
-var greens_week_data_set = [
-	{
-        label: 'Greens',
-        Color: '#00FF00',
-        fill: false,
-        data: {{data.greens.week}}
-    }
-];
-var greens_month_data_set = [
-	{
-        label: 'Greens',
-        Color: '#00FF00',
-        fill: false,
-        data: {{data.greens.month}}
-    }
-];
-var greens_year_data_set = [
-	{
-        label: 'Greens',
-        Color: '#00FF00',
-        fill: false,
-        data: {{data.greens.year}}
     }
 ];
 var month_labels = [
@@ -214,10 +133,6 @@ var year_labels = [
 ]
 var week_labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 document.addEventListener('DOMContentLoaded', function(){
-	// Calories
-	line_chart('calories_week_chart', calories_week_data_set, week_labels, '')
-	line_chart('calories_month_chart', calories_month_data_set, month_labels, '')
-	line_chart('calories_year_chart', calories_year_data_set, year_labels, '')
 	// Carbohydrates
 	line_chart('carbohydrates_week_chart', carbohydrates_week_data_set, week_labels, '')
 	line_chart('carbohydrates_month_chart', carbohydrates_month_data_set, month_labels, '')
@@ -230,14 +145,6 @@ document.addEventListener('DOMContentLoaded', function(){
 	line_chart('fat_week_chart', fat_week_data_set, week_labels, '')
 	line_chart('fat_month_chart', fat_month_data_set, month_labels, '')
 	line_chart('fat_year_chart', fat_year_data_set, year_labels, '')
-	// Sugar
-	line_chart('sugar_week_chart', sugar_week_data_set, week_labels, '')
-	line_chart('sugar_month_chart', sugar_month_data_set, month_labels, '')
-	line_chart('sugar_year_chart', sugar_year_data_set, year_labels, '')
-	// Greens
-	line_chart('greens_week_chart', greens_week_data_set, week_labels, '')
-	line_chart('greens_month_chart', greens_month_data_set, month_labels, '')
-	line_chart('greens_year_chart', greens_year_data_set, year_labels, '')
 }, false);
 </script>
 
