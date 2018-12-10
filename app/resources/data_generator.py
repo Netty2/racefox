@@ -160,33 +160,34 @@ def get_all_historical_values_json(progression='linear', time=100):
     for day, _ in enumerate(history[0]):
         item = {}
         item["date"] = (datetime.now() - timedelta(days=(len(history[0])-2-day))).strftime('%Y-%m-%d')
-        item["calories"] = history[0][day]
-        item["fat"] = history[1][day]
-        item["sugar"] = history[2][day]
-        item["greens"] = history[3][day]
-        item["protein"] = history[4][day]
-        item["carbs"] = history[5][day]
-        item["sleep"] = history[6][day]
-        item["sleep_quality"] = history[7][day]
-        item["steps"] = history[8][day]
-        item["stairs"] = history[9][day]
-        item["distance"] = history[10][day]
-        item["running_km"] = history[11][day]
-        item["max_pulse"] = history[12][day]
-        item["average_pulse"] = history[13][day]
-        item["training_time"] = history[14][day]
-        item["workout_calories"] = history[15][day]
-        item["sleep_goal"] = ideal_sleep_time
-        item["sleep_quality_goal"] = ideal_movement_index
-        item["steps_goal"] = ideal_number_of_steps
-        item["distance_goal"] = ideal_distance
-        item["calories_goal"] = ideal_calories
-        item["fat_goal"] = ideal_fat
-        item["carbs_goal"] = ideal_carbohydrates
-        item["protein_goal"] = ideal_protein
+        item["calories"] = round(history[0][day])
+        item["fat"] = round(history[1][day])
+        item["sugar"] = round(history[2][day])
+        item["greens"] = round(history[3][day])
+        item["protein"] = round(history[4][day])
+        item["carbs"] = round(history[5][day])
+        item["sleep"] = round(history[6][day],2)
+        item["sleep_quality"] = round(history[7][day])
+        item["steps"] = round(history[8][day])
+        item["stairs"] = round(history[9][day])
+        item["distance"] = round(history[10][day],2)
+        item["running_km"] = round(history[11][day],2)
+        item["max_pulse"] = round(history[12][day])
+        item["average_pulse"] = round(history[13][day])
+        item["training_time"] = round(history[14][day])
+        item["workout_calories"] = round(history[15][day])
+        item["sleep_goal"] = round(ideal_sleep_time,2)
+        item["sleep_quality_goal"] = round(ideal_movement_index)
+        item["steps_goal"] = round(ideal_number_of_steps)
+        item["stairs_goal"] = round(ideal_stairs)
+        item["distance_goal"] = round(ideal_distance,2)
+        item["calories_goal"] = round(ideal_calories)
+        item["fat_goal"] = round(ideal_fat)
+        item["carbs_goal"] = round(ideal_carbohydrates)
+        item["protein_goal"] = round(ideal_protein)
         data.append(item)
     data.reverse()
-    return json.dumps({"data":data})
+    return {"data":data}
 
 
 
