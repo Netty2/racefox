@@ -60,7 +60,6 @@ function createProgressGraph(reference){
   var color;
   if (value < 0.33){
     color = window.chartColors.yellow;
-    console.log("33");
   }
   else if (value < 0.66){
     color = window.chartColors.orange;
@@ -73,7 +72,6 @@ function createProgressGraph(reference){
     value = 1;
   }
 
-  console.log(color);
   var graph = new ProgressBar.Circle(reference, {
     color: color,
     strokeWidth: 10,
@@ -86,7 +84,6 @@ function createProgressGraph(reference){
     from: { color: color, width: 4 },
     to: { color: color, width: 10 },
     step: function(state, circle) {
-      console.log("stepcolor"+color);
       circle.path.setAttribute('stroke', color);
       //circle.path.setAttribute('stroke-width', state.width);
     }

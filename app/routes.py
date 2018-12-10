@@ -5,7 +5,22 @@ from app.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 from app.data_generator_clone import get_all_historical_values
-from app.resources.data_generator import get_csv
+from app.resources.data_generator import get_csv, get_all_historical_values_json, get_prioritised_tips
+
+users = {
+	"user1@mail.com": {
+	"data": [],
+	"raw_data": [],
+	"show_assessment": False,
+	"clusters": []
+	},
+	"user2@mail.com": {
+	"data": get_all_historical_values_json().get("data"),
+	"raw_data": get_all_historical_values(),
+	"show_assessment": True,
+	"clusters": ["Cluster 1 : 78%", "Cluster 2 : 59%", "Cluster 3 : 43%", "Cluster 4 : 19%", "Cluster 4 : 9%"]
+	},
+}
 
 mock_day_data = {
     "data": [
@@ -58,43 +73,27 @@ mock_day_data = {
 @app.route("/home")
 def home():
 	# TODO: get user data containing notifications and AI-generated tips
-	mock_home_data = {
-		"coach_messages": ["eat a snack", "Do yoga", "Take a 10 mile walk"],
-		"daily_question": True,
-		"clusters": ["Cluster 1 : 78%", "Cluster 2 : 59%", "Cluster 3 : 43%", "Cluster 4 : 19%", "Cluster 4 : 9%"]
+	try:
+		show_assessment = users.get(current_user.email).get("show_assessment")
+		tips = get_prioritised_tips([x[-2] for x in users.get(current_user.email).get("raw_data")])
+		users.get(current_user.email).get("show_assessment")
+		clusters = users.get(current_user.email).get("clusters")
+	except:
+		show_assessment = False
+		tips = []
+		clusters = []
+	user_data = {
+		"coach_messages": tips[:5],
+		"daily_question": show_assessment,
+		"clusters": clusters
  	}
 	# TODO: get the daily_question attribute from the actual user, so we know wether to show it or not for that day.
-	return render_template('home.html', title='Home', user_data = mock_home_data)
+	return render_template('home.html', title='Home', user_data = user_data)
 
 @app.route("/sleep")
 def load_sleep():
+	day_data = users.get(current_user.email).get("data")
 	# TODO: Get the user id and fetch the specific historic data for that user
-	mock_sleep_data = [
-		{
-		"date": "2018-11-25",
-		"day_display_name": "Today",
-		"hours_slept": 0.6,
-		"sleep_quality": 0.7
-		},
-		{
-		"date": "2018-11-24",
-		"day_display_name": "Yesterday",
-		"hours_slept": 0.2,
-		"sleep_quality": 0.3
-		},
-		{
-		"date": "2018-11-23",
-		"day_display_name": "Friday",
-		"hours_slept": 0.3,
-		"sleep_quality": 0.8
-		},
-		{
-		"date": "2018-11-24",
-		"day_display_name": "Thursday",
-		"hours_slept": 0.55,
-		"sleep_quality": 0.68
-		}
-	]
 	if request.args.get('view') == 'historical':
 		sleep_time_data_points = get_all_historical_values()[6]
 
@@ -107,41 +106,12 @@ def load_sleep():
 		return render_template('sleephistorical.html', title='Sleep - Historical', data={"sleep_time": sleep_time}
 		) #TODO: Lägg till data för historical
 	else:
-		return render_template('sleep.html', title = 'Sleep - Daily', user_data = mock_day_data["data"])
+		return render_template('sleep.html', title = 'Sleep - Daily', user_data = day_data)
 
 @login_required
 @app.route("/activity")
 def load_activity():
-	mock_activity_data = [
-		{
-			"date": "2018-11-25",
-			"day_display_name": "Today",
-			"steps": 0.6,
-			"stairs": 0.7,
-			"distance": 0.8
-		},
-		{
-			"date": "2018-11-24",
-			"day_display_name": "Yesterday",
-			"steps": 0.6,
-			"stairs": 0.7,
-			"distance": 0.8
-		},
-		{
-			"date": "2018-11-23",
-			"day_display_name": "Friday",
-			"steps": 0.6,
-			"stairs": 0.7,
-			"distance": 0.8
-		},
-		{
-			"date": "2018-11-24",
-			"day_display_name": "Thursday",
-			"steps": 0.6,
-			"stairs": 0.7,
-			"distance": 0.8
-		}
-	]
+	day_data = users.get(current_user.email).get("data")
 	if request.args.get('view') == 'historical':
 		stairs_data_points = get_all_historical_values()[9]
 		steps_data_points = get_all_historical_values()[8]
@@ -169,43 +139,14 @@ def load_activity():
 			data={"stairs": stairs, "steps": steps, "distance": distance}
 		)
 	else:
-		return render_template('activity.html', title = 'Activity and Training - Daily', user_data = mock_day_data["data"])
+		return render_template('activity.html', title = 'Activity and Training - Daily', user_data = day_data)
 
 
 @login_required
 @app.route("/food")
 def load_food():
+	day_data = users.get(current_user.email).get("data")
 	# TODO: Get the user id and fetch the specific historic data for that user
-	mock_food_data = [
-		{
-		"date": "2018-11-25",
-		"day_display_name": "Today",
-		"carbohydrates": 0.5,
-		"fat": 0.3,
-		"protein": 0.7
-		},
-		{
-		"date": "2018-11-24",
-		"day_display_name": "Yesterday",
-		"carbohydrates": 0.5,
-		"fat": 0.6,
-		"protein": 0.7
-		},
-		{
-		"date": "2018-11-23",
-		"day_display_name": "Friday",
-		"carbohydrates": 0.5,
-		"fat": 0.6,
-		"protein": 0.7
-		},
-		{
-		"date": "2018-11-24",
-		"day_display_name": "Thursday",
-		"carbohydrates": 0.5,
-		"fat": 0.6,
-		"protein": 0.7
-		}
-	]
 	if request.args.get('view') == 'historical':
 		calories_data_points = get_all_historical_values()[0]
 		carbohydrates_data_points = get_all_historical_values()[5]
@@ -256,7 +197,7 @@ def load_food():
 				"greens": greens}
 		)
 	else:
-		return render_template('food.html', title = 'Food & Nutrition - Daily', user_data = mock_day_data["data"])
+		return render_template('food.html', title = 'Food & Nutrition - Daily', user_data = day_data)
 
 
 @app.route("/register", methods=['GET', 'POST']) # Kan hantera både GET och POST requests. POST requests sker när man skickar in inloggningsdetaljer
@@ -380,6 +321,7 @@ def report_wellness():
 	if current_user.is_authenticated:
 		print("user data was recorded", request.form["wellness"])
 		# TODO: In some way, set the user to already have answered the form
+		users.get(current_user.email)["show_assessment"]=False
 		return jsonify({"message": "success"})
 
 @app.route("/nerd-data")

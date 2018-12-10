@@ -20,10 +20,9 @@
 							<p>Follow the tips from the AI-coach to increase your score.</p>
 
 							<div id="today_chart" class="chart_progress"></div>
-							{% if user_data.daily_question %}
 						</div>
 
-
+						{% if user_data.daily_question %}
 						<div class="coach" id="daily_assessment">
 							<div class="coach_img"><img src="{{ url_for('static', filename='heart-rate-icon.svg')}}" alt="question"></div>
 							<h5 class="coach-title">Daily Assessment</h5>
@@ -61,16 +60,21 @@
 						<div class="coach">
 							<div class="coach_img"><img src="{{ url_for('static', filename='coach-icon.svg') }}" alt=""></div>
 							<h5 class="coach-title">Coach</h5>
+							{% if user_data.coach_messages %}
 							<ul>
 								{% for message in user_data.coach_messages%}
 								<li>{{message}}</li>
 								{% endfor %}
 							</ul>
+							{% else %}
+							<p>There's no data available! You'll get tips when we know you better!</p>
+							{% endif %}
 						</div>
 
 						<div class="coach">
 							<div class="coach_img"><img src="{{ url_for('static', filename='goal.png') }}" alt=""></div>
 							<h5 class="coach-title">Selected cluster</h5>
+							{% if user_data.clusters %}
 							<p>Choose the cluster that matches your goals</p>
 							<ul style="list-style-type:none;padding: 0px;">
 								{% for cluster in user_data.clusters%}
@@ -81,6 +85,9 @@
 									{% endif %}
 								{% endfor %}
 							</ul>
+							{% else %}
+							<p>There's no data available! We need to get to you better to classify what cluster you should aim for.</p>
+							{% endif %}
 						</div>
 						<div class="coach">
 							<div class="coach_img"><img src="https://cms.racefox.se/storage/racefox/RUN/icons/fast-results-icon.svg" alt=""></div>
